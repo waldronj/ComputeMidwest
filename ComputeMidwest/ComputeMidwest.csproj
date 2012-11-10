@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreateHuntController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entities\AccessToken.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -300,6 +301,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Authenticated.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CreateHunt\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
