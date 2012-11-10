@@ -8,15 +8,23 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("hackMWModel", "BarsCities", "Bars", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ComputeMidwest.Models.Bars), "Cities", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ComputeMidwest.Models.Cities))]
+[assembly: EdmRelationshipAttribute("hackMWModel", "BarsDistricts", "Bars", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ComputeMidwest.Models.Bars), "Districts", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ComputeMidwest.Models.Districts))]
+[assembly: EdmRelationshipAttribute("hackMWModel", "BarsSpecials", "Bars", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ComputeMidwest.Models.Bars), "Specials", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ComputeMidwest.Models.Specials))]
+[assembly: EdmRelationshipAttribute("hackMWModel", "UsersSubscriptions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ComputeMidwest.Models.Users), "Subscriptions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ComputeMidwest.Models.Subscriptions), true)]
+
+#endregion
+
 namespace ComputeMidwest.Models
 {
     #region Contexts
@@ -63,9 +71,1021 @@ namespace ComputeMidwest.Models
     
         #endregion
     
+        #region ObjectSet Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Bars> Bars
+        {
+            get
+            {
+                if ((_Bars == null))
+                {
+                    _Bars = base.CreateObjectSet<Bars>("Bars");
+                }
+                return _Bars;
+            }
+        }
+        private ObjectSet<Bars> _Bars;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Cities> Cities
+        {
+            get
+            {
+                if ((_Cities == null))
+                {
+                    _Cities = base.CreateObjectSet<Cities>("Cities");
+                }
+                return _Cities;
+            }
+        }
+        private ObjectSet<Cities> _Cities;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Users> Users
+        {
+            get
+            {
+                if ((_Users == null))
+                {
+                    _Users = base.CreateObjectSet<Users>("Users");
+                }
+                return _Users;
+            }
+        }
+        private ObjectSet<Users> _Users;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Districts> Districts
+        {
+            get
+            {
+                if ((_Districts == null))
+                {
+                    _Districts = base.CreateObjectSet<Districts>("Districts");
+                }
+                return _Districts;
+            }
+        }
+        private ObjectSet<Districts> _Districts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Specials> Specials
+        {
+            get
+            {
+                if ((_Specials == null))
+                {
+                    _Specials = base.CreateObjectSet<Specials>("Specials");
+                }
+                return _Specials;
+            }
+        }
+        private ObjectSet<Specials> _Specials;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Subscriptions> Subscriptions
+        {
+            get
+            {
+                if ((_Subscriptions == null))
+                {
+                    _Subscriptions = base.CreateObjectSet<Subscriptions>("Subscriptions");
+                }
+                return _Subscriptions;
+            }
+        }
+        private ObjectSet<Subscriptions> _Subscriptions;
+
+        #endregion
+        #region AddTo Methods
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Bars EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBars(Bars bars)
+        {
+            base.AddObject("Bars", bars);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Cities EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCities(Cities cities)
+        {
+            base.AddObject("Cities", cities);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Users EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUsers(Users users)
+        {
+            base.AddObject("Users", users);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Districts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDistricts(Districts districts)
+        {
+            base.AddObject("Districts", districts);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Specials EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSpecials(Specials specials)
+        {
+            base.AddObject("Specials", specials);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Subscriptions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubscriptions(Subscriptions subscriptions)
+        {
+            base.AddObject("Subscriptions", subscriptions);
+        }
+
+        #endregion
+    }
+    
+
+    #endregion
+    
+    #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Bars")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Bars : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Bars object.
+        /// </summary>
+        /// <param name="barID">Initial value of the BarID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="cityID">Initial value of the CityID property.</param>
+        /// <param name="ditrictID">Initial value of the DitrictID property.</param>
+        /// <param name="specialsID">Initial value of the SpecialsID property.</param>
+        public static Bars CreateBars(global::System.Int32 barID, global::System.String name, global::System.Int32 cityID, global::System.Int32 ditrictID, global::System.Int32 specialsID)
+        {
+            Bars bars = new Bars();
+            bars.BarID = barID;
+            bars.Name = name;
+            bars.CityID = cityID;
+            bars.DitrictID = ditrictID;
+            bars.SpecialsID = specialsID;
+            return bars;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BarID
+        {
+            get
+            {
+                return _BarID;
+            }
+            set
+            {
+                if (_BarID != value)
+                {
+                    OnBarIDChanging(value);
+                    ReportPropertyChanging("BarID");
+                    _BarID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BarID");
+                    OnBarIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BarID;
+        partial void OnBarIDChanging(global::System.Int32 value);
+        partial void OnBarIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CityID
+        {
+            get
+            {
+                return _CityID;
+            }
+            set
+            {
+                OnCityIDChanging(value);
+                ReportPropertyChanging("CityID");
+                _CityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CityID");
+                OnCityIDChanged();
+            }
+        }
+        private global::System.Int32 _CityID;
+        partial void OnCityIDChanging(global::System.Int32 value);
+        partial void OnCityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DitrictID
+        {
+            get
+            {
+                return _DitrictID;
+            }
+            set
+            {
+                OnDitrictIDChanging(value);
+                ReportPropertyChanging("DitrictID");
+                _DitrictID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DitrictID");
+                OnDitrictIDChanged();
+            }
+        }
+        private global::System.Int32 _DitrictID;
+        partial void OnDitrictIDChanging(global::System.Int32 value);
+        partial void OnDitrictIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SpecialsID
+        {
+            get
+            {
+                return _SpecialsID;
+            }
+            set
+            {
+                OnSpecialsIDChanging(value);
+                ReportPropertyChanging("SpecialsID");
+                _SpecialsID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SpecialsID");
+                OnSpecialsIDChanged();
+            }
+        }
+        private global::System.Int32 _SpecialsID;
+        partial void OnSpecialsIDChanging(global::System.Int32 value);
+        partial void OnSpecialsIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsCities", "Cities")]
+        public EntityCollection<Cities> Cities
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Cities>("hackMWModel.BarsCities", "Cities");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Cities>("hackMWModel.BarsCities", "Cities", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsDistricts", "Districts")]
+        public EntityCollection<Districts> Districts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Districts>("hackMWModel.BarsDistricts", "Districts");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Districts>("hackMWModel.BarsDistricts", "Districts", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsSpecials", "Specials")]
+        public EntityCollection<Specials> Specials
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Specials>("hackMWModel.BarsSpecials", "Specials");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Specials>("hackMWModel.BarsSpecials", "Specials", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Cities")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Cities : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Cities object.
+        /// </summary>
+        /// <param name="cityID">Initial value of the CityID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="districtID">Initial value of the DistrictID property.</param>
+        public static Cities CreateCities(global::System.Int32 cityID, global::System.String name, global::System.Int32 districtID)
+        {
+            Cities cities = new Cities();
+            cities.CityID = cityID;
+            cities.Name = name;
+            cities.DistrictID = districtID;
+            return cities;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CityID
+        {
+            get
+            {
+                return _CityID;
+            }
+            set
+            {
+                if (_CityID != value)
+                {
+                    OnCityIDChanging(value);
+                    ReportPropertyChanging("CityID");
+                    _CityID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CityID");
+                    OnCityIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _CityID;
+        partial void OnCityIDChanging(global::System.Int32 value);
+        partial void OnCityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DistrictID
+        {
+            get
+            {
+                return _DistrictID;
+            }
+            set
+            {
+                OnDistrictIDChanging(value);
+                ReportPropertyChanging("DistrictID");
+                _DistrictID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DistrictID");
+                OnDistrictIDChanged();
+            }
+        }
+        private global::System.Int32 _DistrictID;
+        partial void OnDistrictIDChanging(global::System.Int32 value);
+        partial void OnDistrictIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsCities", "Bars")]
+        public EntityCollection<Bars> Bars
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Bars>("hackMWModel.BarsCities", "Bars");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Bars>("hackMWModel.BarsCities", "Bars", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Districts")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Districts : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Districts object.
+        /// </summary>
+        /// <param name="districtID">Initial value of the DistrictID property.</param>
+        /// <param name="cityID">Initial value of the CityID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Districts CreateDistricts(global::System.Int32 districtID, global::System.Int32 cityID, global::System.String name)
+        {
+            Districts districts = new Districts();
+            districts.DistrictID = districtID;
+            districts.CityID = cityID;
+            districts.Name = name;
+            return districts;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DistrictID
+        {
+            get
+            {
+                return _DistrictID;
+            }
+            set
+            {
+                if (_DistrictID != value)
+                {
+                    OnDistrictIDChanging(value);
+                    ReportPropertyChanging("DistrictID");
+                    _DistrictID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DistrictID");
+                    OnDistrictIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DistrictID;
+        partial void OnDistrictIDChanging(global::System.Int32 value);
+        partial void OnDistrictIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CityID
+        {
+            get
+            {
+                return _CityID;
+            }
+            set
+            {
+                OnCityIDChanging(value);
+                ReportPropertyChanging("CityID");
+                _CityID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CityID");
+                OnCityIDChanged();
+            }
+        }
+        private global::System.Int32 _CityID;
+        partial void OnCityIDChanging(global::System.Int32 value);
+        partial void OnCityIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsDistricts", "Bars")]
+        public Bars Bar
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsDistricts", "Bars").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsDistricts", "Bars").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Bars> BarReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsDistricts", "Bars");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Bars>("hackMWModel.BarsDistricts", "Bars", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Specials")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Specials : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Specials object.
+        /// </summary>
+        /// <param name="specialID">Initial value of the SpecialID property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        public static Specials CreateSpecials(global::System.Int32 specialID, global::System.String description)
+        {
+            Specials specials = new Specials();
+            specials.SpecialID = specialID;
+            specials.Description = description;
+            return specials;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SpecialID
+        {
+            get
+            {
+                return _SpecialID;
+            }
+            set
+            {
+                if (_SpecialID != value)
+                {
+                    OnSpecialIDChanging(value);
+                    ReportPropertyChanging("SpecialID");
+                    _SpecialID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SpecialID");
+                    OnSpecialIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SpecialID;
+        partial void OnSpecialIDChanging(global::System.Int32 value);
+        partial void OnSpecialIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "BarsSpecials", "Bars")]
+        public Bars Bar
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsSpecials", "Bars").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsSpecials", "Bars").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Bars> BarReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Bars>("hackMWModel.BarsSpecials", "Bars");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Bars>("hackMWModel.BarsSpecials", "Bars", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Subscriptions")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Subscriptions : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Subscriptions object.
+        /// </summary>
+        /// <param name="subscriptionID">Initial value of the SubscriptionID property.</param>
+        /// <param name="userID">Initial value of the UserID property.</param>
+        public static Subscriptions CreateSubscriptions(global::System.Int32 subscriptionID, global::System.Int32 userID)
+        {
+            Subscriptions subscriptions = new Subscriptions();
+            subscriptions.SubscriptionID = subscriptionID;
+            subscriptions.UserID = userID;
+            return subscriptions;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SubscriptionID
+        {
+            get
+            {
+                return _SubscriptionID;
+            }
+            set
+            {
+                if (_SubscriptionID != value)
+                {
+                    OnSubscriptionIDChanging(value);
+                    ReportPropertyChanging("SubscriptionID");
+                    _SubscriptionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SubscriptionID");
+                    OnSubscriptionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SubscriptionID;
+        partial void OnSubscriptionIDChanging(global::System.Int32 value);
+        partial void OnSubscriptionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserID
+        {
+            get
+            {
+                return _UserID;
+            }
+            set
+            {
+                OnUserIDChanging(value);
+                ReportPropertyChanging("UserID");
+                _UserID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserID");
+                OnUserIDChanged();
+            }
+        }
+        private global::System.Int32 _UserID;
+        partial void OnUserIDChanging(global::System.Int32 value);
+        partial void OnUserIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "UsersSubscriptions", "Users")]
+        public Users User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("hackMWModel.UsersSubscriptions", "Users").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("hackMWModel.UsersSubscriptions", "Users").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Users> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("hackMWModel.UsersSubscriptions", "Users");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Users>("hackMWModel.UsersSubscriptions", "Users", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="hackMWModel", Name="Users")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Users : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Users object.
+        /// </summary>
+        /// <param name="userID">Initial value of the UserID property.</param>
+        /// <param name="subscriptionID">Initial value of the SubscriptionID property.</param>
+        public static Users CreateUsers(global::System.Int32 userID, global::System.Int32 subscriptionID)
+        {
+            Users users = new Users();
+            users.UserID = userID;
+            users.SubscriptionID = subscriptionID;
+            return users;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserID
+        {
+            get
+            {
+                return _UserID;
+            }
+            set
+            {
+                if (_UserID != value)
+                {
+                    OnUserIDChanging(value);
+                    ReportPropertyChanging("UserID");
+                    _UserID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UserID");
+                    OnUserIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UserID;
+        partial void OnUserIDChanging(global::System.Int32 value);
+        partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SubscriptionID
+        {
+            get
+            {
+                return _SubscriptionID;
+            }
+            set
+            {
+                OnSubscriptionIDChanging(value);
+                ReportPropertyChanging("SubscriptionID");
+                _SubscriptionID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SubscriptionID");
+                OnSubscriptionIDChanged();
+            }
+        }
+        private global::System.Int32 _SubscriptionID;
+        partial void OnSubscriptionIDChanging(global::System.Int32 value);
+        partial void OnSubscriptionIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("hackMWModel", "UsersSubscriptions", "Subscriptions")]
+        public EntityCollection<Subscriptions> Subscriptions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Subscriptions>("hackMWModel.UsersSubscriptions", "Subscriptions");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subscriptions>("hackMWModel.UsersSubscriptions", "Subscriptions", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion
-
     
 }
