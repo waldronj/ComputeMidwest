@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="EntityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="EntityModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EntityModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="EntityModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Hunts" EntityType="EntityModel.Hunt" />
+          <EntitySet Name="Hunters" EntityType="EntityModel.Hunter" />
+          <EntitySet Name="Accounts" EntityType="EntityModel.Account" />
+          <AssociationSet Name="HunterAccount" Association="EntityModel.HunterAccount">
+            <End Role="Hunter" EntitySet="Hunters" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <EntitySet Name="HuntInstances" EntityType="EntityModel.HuntInstance" />
+          <EntitySet Name="Objectives" EntityType="EntityModel.Objective" />
+          <EntitySet Name="FoundObjectives" EntityType="EntityModel.FoundObjective" />
+          <AssociationSet Name="HuntObjective" Association="EntityModel.HuntObjective">
+            <End Role="Hunt" EntitySet="Hunts" />
+            <End Role="Objective" EntitySet="Objectives" />
+          </AssociationSet>
+          <AssociationSet Name="HunterFoundObjective" Association="EntityModel.HunterFoundObjective">
+            <End Role="Hunter" EntitySet="Hunters" />
+            <End Role="FoundObjective" EntitySet="FoundObjectives" />
+          </AssociationSet>
+          <AssociationSet Name="HuntAccount" Association="EntityModel.HuntAccount">
+            <End Role="Hunt" EntitySet="Hunts" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="HunterHuntInstance" Association="EntityModel.HunterHuntInstance">
+            <End Role="Hunter" EntitySet="Hunters" />
+            <End Role="HuntInstance" EntitySet="HuntInstances" />
+          </AssociationSet>
+          <AssociationSet Name="HuntHuntInstance" Association="EntityModel.HuntHuntInstance">
+            <End Role="Hunt" EntitySet="Hunts" />
+            <End Role="HuntInstance" EntitySet="HuntInstances" />
+          </AssociationSet>
+          <AssociationSet Name="FoundObjectiveObjective" Association="EntityModel.FoundObjectiveObjective">
+            <End Role="FoundObjective" EntitySet="FoundObjectives" />
+            <End Role="Objective" EntitySet="Objectives" />
+          </AssociationSet>
+          <AssociationSet Name="HuntInstanceAccount" Association="EntityModel.HuntInstanceAccount">
+            <End Role="HuntInstance" EntitySet="HuntInstances" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Hunt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <NavigationProperty Name="Objectives" Relationship="EntityModel.HuntObjective" FromRole="Hunt" ToRole="Objective" />
+          <NavigationProperty Name="Creator" Relationship="EntityModel.HuntAccount" FromRole="Hunt" ToRole="Account" />
+          <NavigationProperty Name="HuntInstances" Relationship="EntityModel.HuntHuntInstance" FromRole="Hunt" ToRole="HuntInstance" />
+        </EntityType>
+        <EntityType Name="Hunter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Account" Relationship="EntityModel.HunterAccount" FromRole="Hunter" ToRole="Account" />
+          <NavigationProperty Name="FoundObjectives" Relationship="EntityModel.HunterFoundObjective" FromRole="Hunter" ToRole="FoundObjective" />
+          <NavigationProperty Name="HuntInstance" Relationship="EntityModel.HunterHuntInstance" FromRole="Hunter" ToRole="HuntInstance" />
+          <Property Type="Int16" Name="Score" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Hunters" Relationship="EntityModel.HunterAccount" FromRole="Account" ToRole="Hunter" />
+          <NavigationProperty Name="Hunts" Relationship="EntityModel.HuntAccount" FromRole="Account" ToRole="Hunt" />
+          <NavigationProperty Name="HuntInstances" Relationship="EntityModel.HuntInstanceAccount" FromRole="Account" ToRole="HuntInstance" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="AuthType" Nullable="false" />
+        </EntityType>
+        <Association Name="HunterAccount">
+          <End Type="EntityModel.Hunter" Role="Hunter" Multiplicity="*" />
+          <End Type="EntityModel.Account" Role="Account" Multiplicity="1" />
+        </Association>
+        <EntityType Name="HuntInstance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Hunters" Relationship="EntityModel.HunterHuntInstance" FromRole="HuntInstance" ToRole="Hunter" />
+          <NavigationProperty Name="Hunt" Relationship="EntityModel.HuntHuntInstance" FromRole="HuntInstance" ToRole="Hunt" />
+          <Property Type="Guid" Name="HuntId" Nullable="false" />
+          <Property Type="DateTime" Name="StartTime" Nullable="false" />
+          <Property Type="DateTime" Name="EndTime" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="EntityModel.HuntInstanceAccount" FromRole="HuntInstance" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Objective">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Score" Nullable="false" />
+          <NavigationProperty Name="Hunt" Relationship="EntityModel.HuntObjective" FromRole="Objective" ToRole="Hunt" />
+          <Property Type="Guid" Name="HuntId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoundObjective">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Hunter" Relationship="EntityModel.HunterFoundObjective" FromRole="FoundObjective" ToRole="Hunter" />
+          <Property Type="Guid" Name="HunterId" Nullable="false" />
+          <NavigationProperty Name="Objective" Relationship="EntityModel.FoundObjectiveObjective" FromRole="FoundObjective" ToRole="Objective" />
+          <Property Type="DateTime" Name="TimeFound" Nullable="false" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+        </EntityType>
+        <Association Name="HuntObjective">
+          <End Type="EntityModel.Hunt" Role="Hunt" Multiplicity="1" />
+          <End Type="EntityModel.Objective" Role="Objective" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hunt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Objective">
+              <PropertyRef Name="HuntId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HunterFoundObjective">
+          <End Type="EntityModel.Hunter" Role="Hunter" Multiplicity="1" />
+          <End Type="EntityModel.FoundObjective" Role="FoundObjective" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hunter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FoundObjective">
+              <PropertyRef Name="HunterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HuntAccount">
+          <End Type="EntityModel.Hunt" Role="Hunt" Multiplicity="*" />
+          <End Type="EntityModel.Account" Role="Account" Multiplicity="1" />
+        </Association>
+        <Association Name="HunterHuntInstance">
+          <End Type="EntityModel.Hunter" Role="Hunter" Multiplicity="*" />
+          <End Type="EntityModel.HuntInstance" Role="HuntInstance" Multiplicity="1" />
+        </Association>
+        <Association Name="HuntHuntInstance">
+          <End Type="EntityModel.Hunt" Role="Hunt" Multiplicity="1" />
+          <End Type="EntityModel.HuntInstance" Role="HuntInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hunt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HuntInstance">
+              <PropertyRef Name="HuntId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FoundObjectiveObjective">
+          <End Type="EntityModel.FoundObjective" Role="FoundObjective" Multiplicity="1" />
+          <End Type="EntityModel.Objective" Role="Objective" Multiplicity="1" />
+        </Association>
+        <Association Name="HuntInstanceAccount">
+          <End Type="EntityModel.HuntInstance" Role="HuntInstance" Multiplicity="*" />
+          <End Type="EntityModel.Account" Role="Account" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="EntityModel" />
+        <Alias Key="Target" Value="EntityModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="EntityModelContainer" StorageEntityContainer="EntityModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="EntityModel" >
+        <EntityTypeShape EntityType="EntityModel.Hunt" Width="1.5" PointX="0.75" PointY="1.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="EntityModel.Hunter" Width="1.5" PointX="0.75" PointY="4.375" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EntityModel.Account" Width="1.5" PointX="3" PointY="4.25" Height="2.1725878906249996" />
+        <AssociationConnector Association="EntityModel.HunterAccount">
+          <ConnectorPoint PointX="2.25" PointY="5.3651432291666659" />
+          <ConnectorPoint PointX="3" PointY="5.3651432291666659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="EntityModel.HuntInstance" Width="1.5" PointX="3" PointY="1.125" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="EntityModel.Objective" Width="1.5" PointX="5.25" PointY="10.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="EntityModel.FoundObjective" Width="1.5" PointX="3" PointY="10.25" Height="2.1725878906249996" />
+        <AssociationConnector Association="EntityModel.HuntObjective">
+          <ConnectorPoint PointX="2.25" PointY="3.3972022752403839" />
+          <ConnectorPoint PointX="2.6503856153846157" PointY="3.7975878906249996" />
+          <ConnectorPoint PointX="3.6666666666666665" PointY="3.7975878906249991" />
+          <ConnectorPoint PointX="3.8333333333333335" PointY="3.7975878906249996" />
+          <ConnectorPoint PointX="6" PointY="3.7975878906249996" />
+          <ConnectorPoint PointX="6" PointY="10.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.HunterFoundObjective">
+          <ConnectorPoint PointX="1.5" PointY="6.3552864583333317" />
+          <ConnectorPoint PointX="1.5" PointY="11.3362939453125" />
+          <ConnectorPoint PointX="3" PointY="11.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.HuntAccount">
+          <ConnectorPoint PointX="2.2257692307692305" PointY="3.4225878906249996" />
+          <ConnectorPoint PointX="2.625" PointY="3.8218186598557691" />
+          <ConnectorPoint PointX="2.625" PointY="4.7763196145833327" />
+          <ConnectorPoint PointX="3" PointY="4.7763196145833327" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.HunterHuntInstance">
+          <ConnectorPoint PointX="2.25" PointY="4.4373066923076925" />
+          <ConnectorPoint PointX="2.5660744349011204" PointY="4.1212322574065707" />
+          <ConnectorPoint PointX="2.6839255650988791" PointY="4.0033811272088133" />
+          <ConnectorPoint PointX="2.6875" PointY="3.9998066923076925" />
+          <ConnectorPoint PointX="2.6875" PointY="2.3074446614583337" />
+          <ConnectorPoint PointX="3" PointY="2.3074446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.HuntHuntInstance">
+          <ConnectorPoint PointX="2.25" PointY="1.7162223307291669" />
+          <ConnectorPoint PointX="3" PointY="1.7162223307291669" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.FoundObjectiveObjective">
+          <ConnectorPoint PointX="4.5" PointY="11.3362939453125" />
+          <ConnectorPoint PointX="5.25" PointY="11.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="EntityModel.HuntInstanceAccount">
+          <ConnectorPoint PointX="3.75" PointY="3.4898893229166674" />
+          <ConnectorPoint PointX="3.75" PointY="4.25" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
