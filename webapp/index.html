@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+        <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+        <script src="http://htdocs.brittg.com/assets/jquery.js"></script>
+		
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script>
+			var map;
+			function initialize() {
+				var mapOptions = {
+					zoom: 12,
+					center: new google.maps.LatLng(-34.397, 150.644),
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			}
+			function updateMap(lat,lon,name,user,zoom) {
+				if (!zoom) {
+					zoom = 12
+				}
+				coords = new google.maps.LatLng(lat,lon);
+				marker = new google.maps.Marker({
+					map:map,
+					draggable:false,
+					animation: google.maps.Animation.DROP,
+					position: coords
+				});
+			}
+			google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+		
+        <script type="text/javascript">
+			// Enable pusher logging - don't include this in production
+			Pusher.log = function(message) {
+			  if (window.console && window.console.log) window.console.log(message);
+			};
+
+			// Flash fallback logging - don't include this in production
+			WEB_SOCKET_DEBUG = true;
+			
+			var pusher = new Pusher('04af48f0bd881f9f9737');
+			var channel = pusher.subscribe('computeMW_huntr');
+			
+			var messages=[];
+			channel.bind('foundItem', function(data) {
+			  console.log(data);
+			  messages[messages.length] = data;
+			  
+			  updateMap(data['lat'],data['long'],data['name'])
+			  
+			  $('#sidebar').append(data + "<hr>");
+			});
+		</script>
+		
+        <style>
+			body {
+				background:url(./img/background.jpg) #385b8c;
+				background-repeat:repeat-x;
+				color:#ccc;
+				margin:0px;
+				padding:0px;
+			}
+            #logo {
+                text-align:center;
+				background:url(./img/texture.jpg);
+				background-repeat:repeat-x;
+				border-bottom:2px solid #000;
+                padding-top:10px;
+                padding-bottom:10px;
+            }
+            #items, #sidebar {
+				background:#f1f1f1;
+				color:#1f1f1f;
+				padding:10px;
+			}
+			#header {
+				margin-bottom:0px;
+			}
+			#map-canvas {
+				height:500px;
+			}
+        </style>
+    </head>
+    <body>
+        
+        
+        
+        <div class="row-fluid" id='header'>
+            <div class="span12" id='logo'><img src='./img/hunt.png' /></div>
+        </div>
+        <div class="row-fluid">
+			<div class='span12' id='map-canvas'></div>
+		</div>
+        <div class="row-fluid">
+            <div id="items" class="span8">
+                <div id='capture'>
+                    <div class='row'>
+						<div class='span2' id='icon'>No Icon</div>
+						<div class='span8' id='discription'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel lectus quis augue molestie adipiscing nec non augue. Mauris placerat consequat lorem eget dictum. Proin quis tincidunt leo. Etiam convallis iaculis diam a consectetur. Curabitur metus nisl, suscipit a cursus vel, pharetra ac odio. Fusce.
+						</div>
+						<div class='span2' id='status'>X</div>
+					</div>
+					<center>
+						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
+						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
+					</center>
+                </div>
+            </div>
+			
+            <div id="sidebar" class="span4">
+				<center>This is the sidebar where updates will happen</center><hr>
+			</div>
+        </div>
+    </body>
+</html>
