@@ -15,4 +15,6 @@ namespace ComputeMidwest.Entities
         public string name { get; set; }
         public string profile_image_url_https { get; set; }
     }
+
+
 }

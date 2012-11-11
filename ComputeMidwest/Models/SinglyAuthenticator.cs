@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using ComputeMidwest.Entities;
 using ComputeMidwest.Entity;
 using ComputeMidwest.Model;
+using ComputeMidwest.Entities.Facebook;
 
 namespace ComputeMidwest.Models
 {
@@ -40,6 +41,22 @@ namespace ComputeMidwest.Models
             var jresponse = JsonConvert.DeserializeObject<TwitterDetails>(response.Content);
 
             return jresponse.data;
+        }
+
+        public ComputeMidwest.Entities.Facebook.HunterInfo GetUserFromFacebook(string accessToken)
+        {
+            var client = new RestClient("https://api.singly.com");
+            RestRequest request = new RestRequest(@"/services/facebook/self", Method.GET);
+            request.AddParameter("access_token", accessToken);
+            IRestResponse response = client.Execute<ComputeMidwest.Entities.Facebook.RootObject>(request);
+
+            var jresponse = JsonConvert.DeserializeObject<ComputeMidwest.Entities.Facebook.RootObject[]>(response.Content);
+            HunterInfo hi = new HunterInfo()
+            {
+                name = jresponse[0].data.name,
+                thumbnail_url = string.Format("http://graph.facebook.com/{0}/picture", jresponse[0].data.id)
+            };
+            return hi;
         }
     }
 }
