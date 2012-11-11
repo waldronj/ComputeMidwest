@@ -1,0 +1,241 @@
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+        <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+        <script src="./js/jquery.js"></script>
+        <script src="./js/jquery.tmpl.js"></script>
+		<script src="./js/PusherActivityStreamer.js"></script>
+		<script src="./js/date.js"></script>
+		
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script>
+			var map;
+			function initialize() {
+				var mapOptions = {
+					zoom: 12,
+					center: new google.maps.LatLng(-34.397, 150.644),
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			}
+			var markers = [];
+			function dropPin(lat,lon,name,user,zoom) {
+				if (!zoom) {
+					zoom = 12
+				}
+				coords = new google.maps.LatLng(lat,lon);
+				var currentMarker = markers.length;
+				markers[currentMarker] = {}
+				var templateObj = {};
+				if (!templateObj.profileImageUrl)
+					templateObj.profileImageUrl = "./img/noprofile.jpg";
+				templateObj['itemMessage'] = "sample Message";
+				templateObj['timestamp'] = "sample Time";				
+				var contentString = $('#pinTemplate').tmpl(templateObj).html();
+				markers[currentMarker]['infoWindow'] = new google.maps.InfoWindow({
+					content: contentString
+				});
+				markers[currentMarker]['marker'] = new google.maps.Marker({
+					map:map,
+					draggable:false,
+					animation: google.maps.Animation.DROP,
+					position: coords,
+					title: name
+				});
+				
+				google.maps.event.addListener(markers[currentMarker]['marker'], 'click', function() {
+					markers[currentMarker]['infoWindow'].open(map,markers[currentMarker]['marker']);
+				});
+				
+			}
+			google.maps.event.addDomListener(window, 'load', initialize);
+			
+		</script>
+		
+        <script type="text/javascript">
+			// Enable pusher logging - don't include this in production
+			Pusher.log = function(message) {
+			  if (window.console && window.console.log) window.console.log(message);
+			};
+
+			// Flash fallback logging - don't include this in production
+			WEB_SOCKET_DEBUG = true;
+			
+			var pusher = new Pusher('04af48f0bd881f9f9737');
+			var channel = pusher.subscribe('e41bb781-531d-4354-a840-777e267a809e');
+			
+			var messages=[];
+			channel.bind('HunterJoined', HunterJoined);
+			channel.bind('HunterLeft', HunterLeft);
+			channel.bind('ObjectiveFound', ObjectiveFound);
+			channel.bind('ObjectiveApproved', ObjectiveApproved);
+			channel.bind('ObjectiveDenied', ObjectiveDenied);
+			channel.bind('HuntStarting', HuntStarting);
+			channel.bind('HuntEnding', HuntEnding);
+			channel.bind('HuntMessage', HuntMessage);
+			
+			
+			
+			channel.bind('HuntMessage', HuntMessage);
+			
+			
+			function HunterJoined(data) {
+				data.message = data.name + " has just joined the hunt!";
+				message(data);
+			}
+			function HunterLeft(data) {
+				data.message = data.name + " has just left the hunt.";
+				message(data);
+			}
+			function ObjectiveFound(data) {
+				dropPin(data.objectiveLongitude, data.objectiveLatitude, data.objectiveName)
+				data.message = data.name + " has just found " + data.objectiveName;
+				data.messageType = "success";
+				message(data);
+			}
+			function ObjectiveApproved(data) {
+				data.message = "You have just approved the objective submitted by " + data.name;
+				data.messageType = "success";
+				message(data);
+			}
+			function ObjectiveDenied(data) {
+				data.message = "You have just denied the objective submitted by " + data.name;
+				data.messageType = "error";
+				message(data);
+			}
+			function HuntStarting(data) {
+				data.message = "The hunt is now starting!";
+				data.messageType = "success";
+				message(data);
+			}
+			function HuntEnding(data) {
+				data.message = "The hunt is now ending!";
+				data.messageType = "error";
+				message(data);
+			}
+			function HuntMessage(data) {
+				if (!data.name)
+					data.name = "Hunt Facilitator";
+				data.message = data.name + " says " + data.message;
+				message(data);
+			}
+			function message(data) {
+				if (!data.messageType)
+					data.messageType = '';
+				if (!data.profileImageUrl)
+					data.profileImageUrl = "./img/noprofile.jpg";
+				if (!data.timestamp) {
+					data.timestamp = Date.now().toString("h:mm tt");
+				}
+				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();
+			}
+			
+		</script>
+		
+		<script id="clientTemplate" type="text/html">
+			<div id="${messageType}" class='addborder'>
+				<img id="userIcon" src="${profileImageUrl}" />
+				<div id="userAction">${message}</div>
+				<div id="timestamp">${timestamp}</div>
+			</div>
+		</script>
+		
+		<script id="pinTemplate" type="text/html">
+			
+			<div id="action" class='addborder'>
+				<img id="userIcon" src="${profileImageUrl}" />
+				<div id="msgWrapper">
+					<span id="itemFoundMsg">${itemMessage}</span>
+					<span id="timestamp">${timestamp}</span><br>					
+				</div>
+			</div>
+			
+		</script>
+		
+        <style>
+			body {
+				background:url(./img/background.jpg) #385b8c;
+				background-repeat:repeat-x;
+				color:#ccc;
+				margin:0px;
+				padding:0px;
+			}
+            #logo {
+                text-align:center;
+				background:url(./img/texture.jpg);
+				background-repeat:repeat-x;
+				border-bottom:2px solid #000;
+                padding-top:10px;
+                padding-bottom:10px;
+            }
+            #items {
+				background:#f1f1f1;
+				color:#1f1f1f;
+				padding:10px;
+				margin:0px;
+			}
+			#header {
+				margin-bottom:0px;
+			}
+			#map-canvas {
+				height:500px;
+			}			
+			#msgWrapper {
+				margin-left:55px;
+			}			
+			#sidebar #error {
+				background:#ffbfda;
+			}
+			#userIcon {
+				height:50px;
+				width:50px;
+				position:absolute;
+			}
+			#timestamp {
+				
+			}
+			#map-canvas img {
+				max-width: none;
+			}
+        </style>
+    </head>
+    <body>
+        
+        <div class="row-fluid" id='header'>
+            <div class="span12" id='logo'><img src='./img/hunt.png' /></div>
+        </div>
+        <div class="row-fluid">
+			<div class='span12' id='map-canvas'></div>
+		</div>
+        <div class="row-fluid">
+            <div id="items" class="span8">
+                <div id='capture'>
+                    <div class='row'>
+						<div class='span2' id='icon'>No Icon</div>
+						<div class='span8' id='discription'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel lectus quis augue molestie adipiscing nec non augue. Mauris placerat consequat lorem eget dictum. Proin quis tincidunt leo. Etiam convallis iaculis diam a consectetur. Curabitur metus nisl, suscipit a cursus vel, pharetra ac odio. Fusce.
+						</div>
+						<div class='span2' id='status'>X</div>
+					</div>
+					<center>
+						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
+						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
+					</center>
+                </div>
+				
+				<a href="#" onclick="HunterJoined({'name':'Britt Gresham'})">Join Hunt</a><br>
+				<a href="#" onclick="HunterLeft({'name':'Britt Gresham','messageType':'error'})">Leave Hunt</a><br>
+				<a href="#" onclick="ObjectiveFound({'name':'Britt Gresham','objectiveName':'Your Mom','objectiveLongitude':-34.400,'objectiveLatitude':150.650})">Objective Found</a><br>
+				<a href="#" onclick="ObjectiveApproved({'name':'Britt Gresham','objectiveName':'Your Mom'})">Objective Approved</a><br>
+				<a href="#" onclick="ObjectiveDenied({'name':'Britt Gresham','objectiveName':'Your Mom'})">Objective Denied</a><br>
+				<a href="#" onclick="HuntStarting({})">Start Hunt</a><br>
+				<a href="#" onclick="HuntEnding({})">End Hunt</a><br>
+				<a href="#" onclick="dropPin(-34.397, 150.644, 'null')">Add Pin</a><br>
+				
+            </div>
+            
+        </div>
+    </body>
+</html>
