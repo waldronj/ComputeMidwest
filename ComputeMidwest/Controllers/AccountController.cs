@@ -50,8 +50,8 @@ namespace ComputeMidwest.Controllers
             Session["code"] = code;
             ComputeMidwest.Models.SinglyAuthenticator sa = new SinglyAuthenticator();
             var authToken = sa.GetAuthenticated(code);
-            Session["account_token"] = authToken.access_token;
-            ViewBag.Response = Session["account_token"];
+            Session["access_token"] = authToken.access_token;
+            ViewBag.Response = Session["access_token"];
             ViewBag.Code = Session["code"];
             return View();
         }
