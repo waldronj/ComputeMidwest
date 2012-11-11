@@ -81,7 +81,7 @@ namespace ComputeMidwest.Controllers
             }
             else
             {
-                return View("Index", "Home");
+                return Redirect("/Home/Index");
             }
 
             ViewBag.UserName = Session["name"].ToString();
