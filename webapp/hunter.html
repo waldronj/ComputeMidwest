@@ -8,6 +8,7 @@
         <script src="./js/jquery.tmpl.js"></script>
 		<script src="./js/PusherActivityStreamer.js"></script>
 		<script src="./js/date.js"></script>
+		<script src="./js/bootstrap.js"></script>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 		
@@ -170,12 +171,18 @@
 		</script>
 		
 		<script id="newList" type="text/html">
-			<tr>
-				<td>${itemName}</td>
-				<td>${itemDescription}</td>
-				<td><input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
-					<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' /></td>
-			</tr>
+			<div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				Collapsible Group Item #1
+			  </a>
+			</div>
+			<div id="collapseOne" class="accordion-body collapse">
+			  <div class="accordion-inner">
+				Anim pariatur cliche...
+			  </div>
+			</div>
+		  </div>				
 		</script>
 		
         <style>
