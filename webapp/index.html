@@ -28,12 +28,12 @@
 				coords = new google.maps.LatLng(lat,lon);
 				var currentMarker = markers.length;
 				markers[currentMarker] = {}
-				var templateOBJ = {};
-				if (!templateOBJ.profileImageUrl)
-					templateOBJ.profileImageUrl = "./img/noprofile.jpg";
-				templateOBJ['itemMessage'] = "sample Message";
-				templateOBJ['timestamp'] = "sample Time";				
-				var contentString = $('#pinTemplate').tmpl().html();
+				var templateObj = {};
+				if (!templateObj.profileImageUrl)
+					templateObj.profileImageUrl = "./img/noprofile.jpg";
+				templateObj['itemMessage'] = "sample Message";
+				templateObj['timestamp'] = "sample Time";				
+				var contentString = $('#pinTemplate').tmpl(templateObj).html();
 				markers[currentMarker]['infoWindow'] = new google.maps.InfoWindow({
 					content: contentString
 				});
@@ -143,10 +143,14 @@
 		</script>
 		
 		<script id="pinTemplate" type="text/html">
-			<div id="action">
+			<div id="action" class='addborder'>
 				<img id="userIcon" src="${profileImageUrl}" />
-				<span id="itemFoundMsg">${itemMessage}</span><br>
-				<span id="timestamp">${timestamp}</span>
+				<span id="itemFoundMsg">${itemMessage}</span>
+				<span id="timestamp">${timestamp}</span><br>
+				<span>
+					<input type='button' value='Accept' onmouseclick='' /> - 
+					<input type='button' value='Decline' onmouseclick='' />
+				</span>
 			</div>
 		</script>
 		
