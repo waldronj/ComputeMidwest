@@ -7,6 +7,7 @@ using RestSharp;
 using ComputeMidwest;
 using ComputeMidwest.Model;
 using ComputeMidwest.Entity;
+using PusherRESTDotNet;
 
 
 namespace ComputeMidwest.Controllers
@@ -25,7 +26,7 @@ namespace ComputeMidwest.Controllers
         [HttpPost]
         public ActionResult Index(string huntName, string description)
         {
-            HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier()); 
+            HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier(new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d"))); 
             ComputeMidwest.Models.Communications comm = new Models.Communications();
             comm.PostToTwitter(huntName, Session["access_token"].ToString());
             AccountModel am = new AccountModel(new EntityModelContainer());

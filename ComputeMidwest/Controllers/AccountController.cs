@@ -64,7 +64,7 @@ namespace ComputeMidwest.Controllers
             if (userExist != null)
             {
                 var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
-                am.CreateAccount(user.name, Session["account_type"].ToString());
+                am.CreateAccount(user.name, Session["account_type"].ToString(), null);
             }
             else
             {
