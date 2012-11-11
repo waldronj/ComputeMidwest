@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 11/10/2012 18:00:03
+-- Date Created: 11/10/2012 19:49:35
 -- Generated from EDMX file: C:\Users\tstivers\Documents\Visual Studio 2010\Projects\Hunt\ComputeMidwest.Entity\EntityModel.edmx
 -- --------------------------------------------------
 
@@ -12,12 +12,40 @@
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    ALTER TABLE [Hunters] DROP CONSTRAINT [FK_HunterAccount];
+GO
+    ALTER TABLE [Objectives] DROP CONSTRAINT [FK_HuntObjective];
+GO
+    ALTER TABLE [FoundObjectives] DROP CONSTRAINT [FK_HunterFoundObjective];
+GO
+    ALTER TABLE [Hunts] DROP CONSTRAINT [FK_HuntAccount];
+GO
+    ALTER TABLE [Hunters] DROP CONSTRAINT [FK_HunterHuntInstance];
+GO
+    ALTER TABLE [HuntInstances] DROP CONSTRAINT [FK_HuntHuntInstance];
+GO
+    ALTER TABLE [FoundObjectives] DROP CONSTRAINT [FK_FoundObjectiveObjective];
+GO
+    ALTER TABLE [HuntInstances] DROP CONSTRAINT [FK_HuntInstanceAccount];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- NOTE: if the table does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    DROP TABLE [Hunts];
+GO
+    DROP TABLE [Hunters];
+GO
+    DROP TABLE [Accounts];
+GO
+    DROP TABLE [HuntInstances];
+GO
+    DROP TABLE [Objectives];
+GO
+    DROP TABLE [FoundObjectives];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -45,7 +73,8 @@ GO
 CREATE TABLE [Accounts] (
     [Id] uniqueidentifier  NOT NULL,
     [Name] nvarchar(4000)  NOT NULL,
-    [AuthType] nvarchar(4000)  NOT NULL
+    [AuthType] nvarchar(4000)  NOT NULL,
+    [ProfileImageUrl] nvarchar(4000)  NULL
 );
 GO
 
@@ -64,7 +93,7 @@ CREATE TABLE [Objectives] (
     [Id] uniqueidentifier  NOT NULL,
     [Name] nvarchar(4000)  NOT NULL,
     [Description] nvarchar(4000)  NOT NULL,
-    [Score] nvarchar(4000)  NOT NULL,
+    [Score] smallint  NOT NULL,
     [HuntId] uniqueidentifier  NOT NULL
 );
 GO
@@ -75,6 +104,7 @@ CREATE TABLE [FoundObjectives] (
     [HunterId] uniqueidentifier  NOT NULL,
     [TimeFound] datetime  NOT NULL,
     [Approved] bit  NOT NULL,
+    [ImageUrl] nvarchar(4000)  NOT NULL,
     [Objective_Id] uniqueidentifier  NOT NULL
 );
 GO

@@ -1,29 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ComputeMidwest.Entity;
+﻿using ComputeMidwest.Entity;
+using PusherRESTDotNet;
 
 namespace ComputeMidwest.Model
 {
-    class HuntNotifier
+    public enum EventTypes
     {
+        HunterJoined,
+        HunterLeft,
+        ObjectiveFound,
+        ObjectiveApproved,
+        ObjectiveDenied,
+        HuntStarting,
+        HuntEnding,
+        HuntMessage
+    }
+
+    public class HuntNotifier
+    {
+        private readonly IPusherProvider _provider;
+
+        public HuntNotifier(IPusherProvider provider)
+        {
+            _provider = provider;
+        }
+
         public void NotifyHunterJoined(Hunter hunter)
         {
-            // TODO: use pusher to notify 
-            // TODO: objective.Hunter.HuntInstance.Hunters
+            var request =
+                new ObjectPusherRequest(hunter.HuntInstance.Id.ToString("D"),
+                                        EventTypes.HunterJoined.ToString(),
+                                        new
+                                            {
+                                                id = hunter.Id.ToString("D"),
+                                                name = hunter.Account.Name,
+                                                profileImageUrl = hunter.Account.ProfileImageUrl
+                                            });
+            _provider.Trigger(request);
         }
 
         public void NotifyHunterLeft(Hunter hunter)
         {
-            // TODO: use pusher to notify 
-            // TODO: objective.Hunter.HuntInstance.Hunters            
+            var request =
+                new ObjectPusherRequest(hunter.HuntInstance.Id.ToString("D"),
+                                        EventTypes.HunterLeft.ToString(),
+                                        new
+                                            {
+                                                id = hunter.Id.ToString("D"),
+                                                name = hunter.Account.Name,
+                                                profileImageUrl = hunter.Account.ProfileImageUrl
+                                            });
+            _provider.Trigger(request);
         }
 
         public void NotifyObjectiveFound(FoundObjective objective)
         {
-            // TODO: use pusher to notify 
-            // TODO: objective.Hunter.HuntInstance.Admin 
+            var request =
+                new ObjectPusherRequest(
+                    objective.Hunter.HuntInstance.Id.ToString("D") + "_" +
+                    objective.Hunter.HuntInstance.Admin.Id.ToString("D"),
+                    EventTypes.ObjectiveFound.ToString(),
+                    new
+                        {
+                            hunter = new
+                                {
+                                    id = objective.Hunter.Id.ToString("D"),
+                                    name = objective.Hunter.Account.Name,
+                                    profileImageUrl = objective.Hunter.Account.ProfileImageUrl
+                                },
+                            objective = new
+                                {
+                                    id = objective.Objective.Id.ToString("D"),
+                                    name = objective.Objective.Name,
+                                    imgUrl = objective.ImageUrl
+                                }
+                        });
+            _provider.Trigger(request);
         }
 
         public void NotifyObjectiveDenied(FoundObjective objective)

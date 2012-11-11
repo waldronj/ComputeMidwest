@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{103A2755-6ADC-43DD-8F5B-EB8306465D36}</ProjectGuid>
+    <ProjectGuid>{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ComputeMidwest.Model</RootNamespace>
-    <AssemblyName>ComputeMidwest.Model</AssemblyName>
+    <RootNamespace>ComputeMidwest.Test</RootNamespace>
+    <AssemblyName>ComputeMidwest.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,17 +35,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="PusherRESTDotNet, Version=1.2.0.26184, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PusherRESTDotNet.1.2.0.26184\lib\net35\PusherRESTDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,19 +51,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountModel.cs" />
-    <Compile Include="HuntModel.cs" />
-    <Compile Include="HuntNotifier.cs" />
+    <Compile Include="AccountModelTest.cs" />
+    <Compile Include="DummyHuntFactory.cs" />
+    <Compile Include="NotifierTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComputeMidwest.Entity\ComputeMidwest.Entity.csproj">
       <Project>{2BDC34A1-25EB-450D-9D4B-7D100E2933D6}</Project>
       <Name>ComputeMidwest.Entity</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\ComputeMidwest.Model\ComputeMidwest.Model.csproj">
+      <Project>{103A2755-6ADC-43DD-8F5B-EB8306465D36}</Project>
+      <Name>ComputeMidwest.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeMidwest.Entity", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeMidwest.Model", "ComputeMidwest.Model\ComputeMidwest.Model.csproj", "{103A2755-6ADC-43DD-8F5B-EB8306465D36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeMidwest.Test", "ComputeMidwest.Test\ComputeMidwest.Test.csproj", "{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{103A2755-6ADC-43DD-8F5B-EB8306465D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{103A2755-6ADC-43DD-8F5B-EB8306465D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{103A2755-6ADC-43DD-8F5B-EB8306465D36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC7ACC9-93DC-42D4-8513-2F895A56C8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

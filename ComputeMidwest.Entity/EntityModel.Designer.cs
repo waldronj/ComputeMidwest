@@ -343,6 +343,28 @@ namespace ComputeMidwest.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+<<<<<<< HEAD
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ProfileImageUrl
+        {
+            get
+            {
+                return _ProfileImageUrl;
+            }
+            set
+            {
+                OnProfileImageUrlChanging(value);
+                ReportPropertyChanging("ProfileImageUrl");
+                _ProfileImageUrl = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ProfileImageUrl");
+                OnProfileImageUrlChanged();
+            }
+        }
+        private global::System.String _ProfileImageUrl;
+        partial void OnProfileImageUrlChanging(global::System.String value);
+        partial void OnProfileImageUrlChanged();
+=======
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String AccountToken
@@ -363,6 +385,7 @@ namespace ComputeMidwest.Entity
         private global::System.String _AccountToken;
         partial void OnAccountTokenChanging(global::System.String value);
         partial void OnAccountTokenChanged();
+>>>>>>> 34b54be36a8ffff2bd6b34239a61025bcbfe9112
 
         #endregion
 
@@ -456,13 +479,15 @@ namespace ComputeMidwest.Entity
         /// <param name="hunterId">Initial value of the HunterId property.</param>
         /// <param name="timeFound">Initial value of the TimeFound property.</param>
         /// <param name="approved">Initial value of the Approved property.</param>
-        public static FoundObjective CreateFoundObjective(global::System.Guid id, global::System.Guid hunterId, global::System.DateTime timeFound, global::System.Boolean approved)
+        /// <param name="imageUrl">Initial value of the ImageUrl property.</param>
+        public static FoundObjective CreateFoundObjective(global::System.Guid id, global::System.Guid hunterId, global::System.DateTime timeFound, global::System.Boolean approved, global::System.String imageUrl)
         {
             FoundObjective foundObjective = new FoundObjective();
             foundObjective.Id = id;
             foundObjective.HunterId = hunterId;
             foundObjective.TimeFound = timeFound;
             foundObjective.Approved = approved;
+            foundObjective.ImageUrl = imageUrl;
             return foundObjective;
         }
 
@@ -568,6 +593,30 @@ namespace ComputeMidwest.Entity
         private global::System.Boolean _Approved;
         partial void OnApprovedChanging(global::System.Boolean value);
         partial void OnApprovedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ImageUrl
+        {
+            get
+            {
+                return _ImageUrl;
+            }
+            set
+            {
+                OnImageUrlChanging(value);
+                ReportPropertyChanging("ImageUrl");
+                _ImageUrl = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ImageUrl");
+                OnImageUrlChanged();
+            }
+        }
+        private global::System.String _ImageUrl;
+        partial void OnImageUrlChanging(global::System.String value);
+        partial void OnImageUrlChanged();
 
         #endregion
 
@@ -1289,7 +1338,7 @@ namespace ComputeMidwest.Entity
         /// <param name="description">Initial value of the Description property.</param>
         /// <param name="score">Initial value of the Score property.</param>
         /// <param name="huntId">Initial value of the HuntId property.</param>
-        public static Objective CreateObjective(global::System.Guid id, global::System.String name, global::System.String description, global::System.String score, global::System.Guid huntId)
+        public static Objective CreateObjective(global::System.Guid id, global::System.String name, global::System.String description, global::System.Int16 score, global::System.Guid huntId)
         {
             Objective objective = new Objective();
             objective.Id = id;
@@ -1384,7 +1433,7 @@ namespace ComputeMidwest.Entity
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Score
+        public global::System.Int16 Score
         {
             get
             {
@@ -1394,13 +1443,13 @@ namespace ComputeMidwest.Entity
             {
                 OnScoreChanging(value);
                 ReportPropertyChanging("Score");
-                _Score = StructuralObject.SetValidValue(value, false);
+                _Score = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("Score");
                 OnScoreChanged();
             }
         }
-        private global::System.String _Score;
-        partial void OnScoreChanging(global::System.String value);
+        private global::System.Int16 _Score;
+        partial void OnScoreChanging(global::System.Int16 value);
         partial void OnScoreChanged();
     
         /// <summary>

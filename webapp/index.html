@@ -1,17 +1,15 @@
 <html>
     <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		
         <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
         <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
         <script src="./js/jquery.js"></script>
         <script src="./js/jquery.tmpl.js"></script>
 		<script src="./js/PusherActivityStreamer.js"></script>
+		<script src="./js/date.js"></script>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<style>
-			#map-canvas img {
-				max-width: none;
-			}
-		</style>
 		<script>
 			var map;
 			function initialize() {
@@ -64,54 +62,59 @@
 			var channel = pusher.subscribe('e41bb781-531d-4354-a840-777e267a809e');
 			
 			var messages=[];
-			channel.bind('HunterJoined', function(data) {
-				HunterJoined(data);
-			});
+			channel.bind('HunterJoined', HunterJoined);
+			channel.bind('HunterLeft', HunterLeft);
+			channel.bind('ObjectiveFound', ObjectiveFound);
+			channel.bind('ObjectiveApproved', ObjectiveApproved);
 			
-			channel.bind('HuntMessage', function(data) {
-				HuntMessage(data);
-			});
 			
-			channel.bind('foundItem', function(data) {
-			  console.log(data);
-			  messages[messages.length] = data;
-			  
-			  updateMap(data['lat'],data['long'],data['name'])
-			  
-			  
-			});
 			
-			function message(data) {
-				if (!data.profileImage)
-					data.profileImage = "./img/noprofile.jpg";
-				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();;
-			}
+			channel.bind('HuntMessage', HuntMessage);
 			
-			function HuntMessage(data) {
-				if (!data.name)
-					data.name = "Hunt Facilitator";
-				messageObj = data
-				messageObj['message'] = data.name + " says " + data.message;
-				message(messageObj);
-			}
+			
 			function HunterJoined(data) {
-				messageObj = data
-				messageObj['message'] = data.name + " has just joined the hunt!";
-				message(messageObj);
+				data.message = data.name + " has just joined the hunt!";
+				message(data);
 			}
-			
+			function HunterLeft(data) {
+				data.message = data.name + " has just left the hunt.";
+				message(data);
+			}
+			function ObjectiveFound(data) {
+				data.message = data.name + " has just found " + data.objectiveName;
+				data.messageType = "success";
+				message(data);
+			}
+			function ObjectiveApproved(data) {
+				data.message = "You have just approved the objective submitted by " + data.name;
+				data.messageType = "success";
+				message(data);
+			}
 			function message(data) {
+				if (!data.messageType)
+					data.messageType = '';
 				if (!data.profileImageUrl)
 					data.profileImageUrl = "./img/noprofile.jpg";
-				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();;
+				if (!data.timestamp) {
+					data.timestamp = Date.now().toString("h:mm tt");
+				}
+				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();
 			}
 			
 		</script>
 		
 		<script id="clientTemplate" type="text/html">
+			<div id="${messageType}" class='addborder'>
+				<img id="userIcon" src="${profileImageUrl}" />
+				<div id="userAction">${message}</div>
+				<div id="timestamp">${timestamp}</div>
+			</div>
+		</script>
+		
+		<script id="pinTemplate" type="text/html">
 			<div id="action">
 				<img id="userIcon" src="${profileImageUrl}" />
-				<span id="userAction">${message}</span><br>
+				<span id="itemFoundMsg">${itemMessage}</span><br>
 				<span id="timestamp">${timestamp}</span>
 			</div>
 		</script>
@@ -136,6 +139,7 @@
 				background:#f1f1f1;
 				color:#1f1f1f;
 				padding:10px;
+				margin:0px;
 			}
 			#header {
 				margin-bottom:0px;
@@ -143,22 +147,32 @@
 			#map-canvas {
 				height:500px;
 			}
-			#action {
+			#sidebar .addborder {
 				border:1px solid #ccc;
-				height:50px;
+				min-height:50px;
 				background:#bfdaff;
-				overflow:hidden;
+				overflow:auto;
 				margin-top:5px;
+			}
+			#sidebar div div {
+				margin-left:55px;
+			}
+			#sidebar #success {
+				background:#bfffda;
+			}
+			#sidebar #error {
+				background:#ffbfda;
 			}
 			#userIcon {
 				height:50px;
-				padding-right:
-			}
-			#userAction {
-				width:100%;
+				width:50px;
+				position:absolute;
 			}
 			#timestamp {
 				
+			}
+			#map-canvas img {
+				max-width: none;
 			}
         </style>
     </head>
@@ -188,11 +202,13 @@
 					</center>
                 </div>
 				
-				<a href="#" onclick="HunterJoined({'profileImageUrl':'http://www.gravatar.com/avatar/b068931cc450442b63f5b3d276ea4297?s=80&d=mm&r=g','name':'Britt Gresham','timestamp':'NOW IS THE TIME'})">Join Hunt</a>
-				<a href="#" onclick="updateMap(-34.397, 150.644, 'null')">Add Pin</a>
+				<a href="#" onclick="HunterJoined({'name':'Britt Gresham'})">Join Hunt</a><br>
+				<a href="#" onclick="HunterLeft({'name':'Britt Gresham','messageType':'error'})">Leave Hunt</a><br>
+				<a href="#" onclick="ObjectiveFound({'name':'Britt Gresham','objectiveName':'Your Mom'})">Objective Found</a><br>
+				<a href="#" onclick="ObjectiveApproved({'name':'Britt Gresham','objectiveName':'Your Mom'})">Objective Approved</a><br>
+				<a href="#" onclick="updateMap(-34.397, 150.644, 'null')">Add Pin</a><br>
 				
             </div>
-			
             <div id="sidebar" class="span4">
 				
 			</div>

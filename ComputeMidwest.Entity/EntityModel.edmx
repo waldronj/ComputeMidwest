@@ -67,9 +67,10 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="AuthType" Type="nvarchar" Nullable="false" />
+    <Property Name="ProfileImageUrl" Type="nvarchar" Nullable="true" />
   </EntityType>
   <EntityType Name="HuntInstances">
     <Key>
@@ -88,7 +89,7 @@
     <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="Description" Type="nvarchar" Nullable="false" />
-    <Property Name="Score" Type="nvarchar" Nullable="false" />
+    <Property Name="Score" Type="smallint" Nullable="false" />
     <Property Name="HuntId" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="FoundObjectives">
@@ -99,6 +100,7 @@
     <Property Name="HunterId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TimeFound" Type="datetime" Nullable="false" />
     <Property Name="Approved" Type="bit" Nullable="false" />
+    <Property Name="ImageUrl" Type="nvarchar" Nullable="false" />
     <Property Name="Objective_Id" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <Association Name="HunterAccount">
@@ -266,13 +268,17 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Hunters" Relationship="EntityModel.HunterAccount" FromRole="Account" ToRole="Hunter" />
           <NavigationProperty Name="Hunts" Relationship="EntityModel.HuntAccount" FromRole="Account" ToRole="Hunt" />
           <NavigationProperty Name="HuntInstances" Relationship="EntityModel.HuntInstanceAccount" FromRole="Account" ToRole="HuntInstance" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="AuthType" Nullable="false" />
+<<<<<<< HEAD
+          <Property Type="String" Name="ProfileImageUrl" Nullable="true" />
+=======
           <Property Type="String" Name="AccountToken" Nullable="false" MaxLength="Max" />
+>>>>>>> 34b54be36a8ffff2bd6b34239a61025bcbfe9112
         </EntityType>
         <Association Name="HunterAccount">
           <End Type="EntityModel.Hunter" Role="Hunter" Multiplicity="*" />
@@ -297,7 +303,7 @@
           <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
-          <Property Type="String" Name="Score" Nullable="false" />
+          <Property Type="Int16" Name="Score" Nullable="false" />
           <NavigationProperty Name="Hunt" Relationship="EntityModel.HuntObjective" FromRole="Objective" ToRole="Hunt" />
           <Property Type="Guid" Name="HuntId" Nullable="false" />
         </EntityType>
@@ -311,6 +317,7 @@
           <NavigationProperty Name="Objective" Relationship="EntityModel.FoundObjectiveObjective" FromRole="FoundObjective" ToRole="Objective" />
           <Property Type="DateTime" Name="TimeFound" Nullable="false" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="String" Name="ImageUrl" Nullable="false" />
         </EntityType>
         <Association Name="HuntObjective">
           <End Type="EntityModel.Hunt" Role="Hunt" Multiplicity="1" />
@@ -393,6 +400,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="AuthType" ColumnName="AuthType" />
+          <ScalarProperty Name="ProfileImageUrl" ColumnName="ProfileImageUrl" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -424,6 +432,7 @@
           <ScalarProperty Name="HunterId" ColumnName="HunterId" />
           <ScalarProperty Name="TimeFound" ColumnName="TimeFound" />
           <ScalarProperty Name="Approved" ColumnName="Approved" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -495,7 +504,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="EntityModel.HuntInstance" Width="1.5" PointX="3" PointY="1.125" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="EntityModel.Objective" Width="1.5" PointX="5.25" PointY="10.25" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="EntityModel.FoundObjective" Width="1.5" PointX="3" PointY="10.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="EntityModel.FoundObjective" Width="1.5" PointX="3" PointY="10.25" Height="2.3648893229166674" />
         <AssociationConnector Association="EntityModel.HuntObjective">
           <ConnectorPoint PointX="2.25" PointY="3.3972022752403839" />
           <ConnectorPoint PointX="2.6503856153846157" PointY="3.7975878906249996" />
@@ -506,8 +515,8 @@
         </AssociationConnector>
         <AssociationConnector Association="EntityModel.HunterFoundObjective">
           <ConnectorPoint PointX="1.5" PointY="6.3552864583333317" />
-          <ConnectorPoint PointX="1.5" PointY="11.3362939453125" />
-          <ConnectorPoint PointX="3" PointY="11.3362939453125" />
+          <ConnectorPoint PointX="1.5" PointY="11.432444661458334" />
+          <ConnectorPoint PointX="3" PointY="11.432444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="EntityModel.HuntAccount">
           <ConnectorPoint PointX="2.2257692307692305" PointY="3.4225878906249996" />
