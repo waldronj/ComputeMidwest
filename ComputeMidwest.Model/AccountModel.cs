@@ -4,7 +4,7 @@ using ComputeMidwest.Entity;
 
 namespace ComputeMidwest.Model
 {
-    internal class AccountModel
+    public class AccountModel
     {
         private readonly EntityModelContainer _container;
 
@@ -27,12 +27,14 @@ namespace ComputeMidwest.Model
                  select account).FirstOrDefault();
         }
 
-        public Account CreateAccount(string username, string authType)
+        public Account CreateAccount(string username, string authType, string profileImageUrl)
         {
             var account = new Account
                 {
+                    Id = new Guid(),
                     Name = username,
-                    AuthType = authType
+                    AuthType = authType,
+                    ProfileImageUrl = profileImageUrl
                 };
 
             _container.Accounts.AddObject(account);
