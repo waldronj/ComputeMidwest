@@ -133,6 +133,20 @@
 				$('#alertTemplate').tmpl(data).hide().prependTo('.container').fadeIn();
 			}
 			
+			var currentLongitude;
+			var currentLatitude;
+			
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.watchPosition(showPosition);
+				} else {
+					x.innerHTML="Geolocation is not supported by this browser.";
+				}
+			}
+			function showPosition(position) {
+				currentLatitude = position.coords.latitude;
+				currentLongitude = position.coords.longitude; 
+			}
 		</script>
 		
 		<script id="clientTemplate" type="text/html">
@@ -229,7 +243,6 @@
         </style>
     </head>
     <body>
-        
         <div class="row-fluid" id='header'>
             <div class="span12" id='logo'><img src='./img/hunt.png' /></div>
         </div>
@@ -254,6 +267,7 @@
 					<a href="#" onclick="ObjectiveDenied({'name':'Britt Gresham','objectiveName':'Your Mom'})">Objective Denied</a><br>
 					<a href="#" onclick="HuntStarting({})">Start Hunt</a><br>
 					<a href="#" onclick="HuntEnding({})">End Hunt</a><br>
+					<a href="#" onclick="getLocation()">Get Location</a><br>
 					<a href="#" onclick="dropPin(-34.397, 150.644, 'null')">Add Pin</a>
 					
 				</div>
