@@ -2,10 +2,16 @@
     <head>
         <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
         <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
-        <script src="http://htdocs.brittg.com/assets/jquery.js"></script>
+        <script src="./js/jquery.js"></script>
+        <script src="./js/jquery.tmpl.js"></script>
 		<script src="./js/PusherActivityStreamer.js"></script>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<style>
+			#map-canvas img {
+				max-width: none;
+			}
+		</style>
 		<script>
 			var map;
 			function initialize() {
@@ -16,19 +22,33 @@
 				};
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 			}
+			var markers = [];
 			function updateMap(lat,lon,name,user,zoom) {
 				if (!zoom) {
 					zoom = 12
 				}
 				coords = new google.maps.LatLng(lat,lon);
-				marker = new google.maps.Marker({
+				var currentMarker = markers.length;
+				markers[currentMarker] = {}
+				var contentString = "This is the popup";
+				markers[currentMarker]['infoWindow'] = new google.maps.InfoWindow({
+					content: contentString
+				});
+				markers[currentMarker]['marker'] = new google.maps.Marker({
 					map:map,
 					draggable:false,
 					animation: google.maps.Animation.DROP,
-					position: coords
+					position: coords,
+					title: name
 				});
+				
+				google.maps.event.addListener(markers[currentMarker]['marker'], 'click', function() {
+					markers[currentMarker]['infoWindow'].open(map,markers[currentMarker]['marker']);
+				});
+				
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
+			
 		</script>
 		
         <script type="text/javascript">
@@ -41,17 +61,59 @@
 			WEB_SOCKET_DEBUG = true;
 			
 			var pusher = new Pusher('04af48f0bd881f9f9737');
-			var channel = pusher.subscribe('computeMW_huntr');
+			var channel = pusher.subscribe('e41bb781-531d-4354-a840-777e267a809e');
 			
 			var messages=[];
+			channel.bind('HunterJoined', function(data) {
+				HunterJoined(data);
+			});
+			
+			channel.bind('HuntMessage', function(data) {
+				HuntMessage(data);
+			});
+			
 			channel.bind('foundItem', function(data) {
 			  console.log(data);
 			  messages[messages.length] = data;
 			  
 			  updateMap(data['lat'],data['long'],data['name'])
 			  
-			  $('#sidebar').append(data + "<hr>");
+			  
 			});
+			
+			function message(data) {
+				if (!data.profileImage)
+					data.profileImage = "./img/noprofile.jpg";
+				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();;
+			}
+			
+			function HuntMessage(data) {
+				if (!data.name)
+					data.name = "Hunt Facilitator";
+				messageObj = data
+				messageObj['message'] = data.name + " says " + data.message;
+				message(messageObj);
+			}
+			function HunterJoined(data) {
+				messageObj = data
+				messageObj['message'] = data.name + " has just joined the hunt!";
+				message(messageObj);
+			}
+			
+			function message(data) {
+				if (!data.profileImageUrl)
+					data.profileImageUrl = "./img/noprofile.jpg";
+				$('#clientTemplate').tmpl(data).hide().prependTo('#sidebar').fadeIn();;
+			}
+			
+		</script>
+		
+		<script id="clientTemplate" type="text/html">
+			<div id="action">
+				<img id="userIcon" src="${profileImageUrl}" />
+				<span id="userAction">${message}</span><br>
+				<span id="timestamp">${timestamp}</span>
+			</div>
 		</script>
 		
         <style>
@@ -81,6 +143,23 @@
 			#map-canvas {
 				height:500px;
 			}
+			#action {
+				border:1px solid #ccc;
+				height:50px;
+				background:#bfdaff;
+				overflow:hidden;
+				margin-top:5px;
+			}
+			#userIcon {
+				height:50px;
+				padding-right:
+			}
+			#userAction {
+				width:100%;
+			}
+			#timestamp {
+				
+			}
         </style>
     </head>
     <body>
@@ -108,10 +187,14 @@
 						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
 					</center>
                 </div>
+				
+				<a href="#" onclick="HunterJoined({'profileImageUrl':'http://www.gravatar.com/avatar/b068931cc450442b63f5b3d276ea4297?s=80&d=mm&r=g','name':'Britt Gresham','timestamp':'NOW IS THE TIME'})">Join Hunt</a>
+				<a href="#" onclick="updateMap(-34.397, 150.644, 'null')">Add Pin</a>
+				
             </div>
 			
             <div id="sidebar" class="span4">
-				<center>This is the sidebar where updates will happen</center><hr>
+				
 			</div>
         </div>
     </body>
