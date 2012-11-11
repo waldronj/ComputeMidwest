@@ -38,7 +38,7 @@ namespace ComputeMidwest.Controllers
             HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier(new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d")));
 
             AccountModel am = new AccountModel(new EntityModelContainer());
-            Account act = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            Account act = am.GetAccountByAccountToken(Session["account"].ToString(), Session["account_type"].ToString());
             Hunt hunt = new Hunt()
             {
                 Creator = act,
