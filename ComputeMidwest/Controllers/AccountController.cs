@@ -65,6 +65,7 @@ namespace ComputeMidwest.Controllers
                     var facebookresponse = sa.GetUserFromFacebook(Session["access_token"].ToString());
                     Session["name"] = facebookresponse.name;
                     Session["image"] = facebookresponse.thumbnail_url;
+                    Session["facces"] = facebookresponse.idr.ToString();
                     break;
                 case "Twitter":
                     var response = sa.GetUserFromTwitter(Session["access_token"].ToString());
@@ -72,21 +73,21 @@ namespace ComputeMidwest.Controllers
                     break;
             }
             
-            var userExist = _accountModel.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
-            if (userExist != null)
-            {
-                var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
-                _accountModel.CreateAccount(user.name, Session["account_type"].ToString(), null);
-            }
-            else
-            {
-                return View("Index", "Home");
-            }
+            //var userExist = _accountModel.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            //if (userExist != null)
+            //{
+            //    var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
+            //    _accountModel.CreateAccount(user.name, Session["account_type"].ToString(), null);
+            //}
+            //else
+            //{
+            //    return View("Index", "Home");
+            //}
 
-            ViewBag.UserName = Session["name"].ToString();
-            ViewBag.Image = Session["image"].ToString();
-            ViewBag.Code = code;
-            ViewBag.Response = authToken.account;
+            //ViewBag.UserName = Session["name"].ToString();
+            //ViewBag.Image = Session["image"].ToString();
+            //ViewBag.Code = code;
+            //ViewBag.Response = authToken.account;
 
             return View();
         }

@@ -183,6 +183,7 @@
     <Compile Include="Controllers\JoinHuntController.cs" />
     <Compile Include="Controllers\PusherProvider.cs" />
     <Compile Include="Entities\Facebook\FacebookDetails.cs" />
+    <Compile Include="Entities\Facebook\Pages\FacebookPages.cs" />
     <Compile Include="Entities\TwitterDetails.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

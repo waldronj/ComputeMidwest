@@ -5,6 +5,7 @@ using System.Web;
 using ComputeMidwest.Entity;
 using RestSharp;
 using StructureMap;
+using PusherRESTDotNet;
 
 namespace ComputeMidwest.App_Start
 {
@@ -22,6 +23,7 @@ namespace ComputeMidwest.App_Start
 
                         });
                     registry.For<EntityModelContainer>().Use(x => new EntityModelContainer());
+                    registry.For<IPusherProvider>().Use(x => new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d"));
                 }
             );
         }
