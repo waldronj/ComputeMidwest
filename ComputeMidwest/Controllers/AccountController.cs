@@ -51,8 +51,14 @@ namespace ComputeMidwest.Controllers
             ComputeMidwest.Models.SinglyAuthenticator sa = new SinglyAuthenticator();
             var authToken = sa.GetAuthenticated(code);
             Session["access_token"] = authToken.access_token;
-            ViewBag.Response = Session["access_token"];
-            ViewBag.Code = Session["code"];
+            Session["account"] = authToken.account;
+            
+            var response = sa.GetUser(Session["access_token"].ToString());
+            ViewBag.UserName = response.name;
+            ViewBag.Image = response.profile_image_url_https;
+            ViewBag.Code = code;
+            ViewBag.Response = authToken.account;
+
             return View();
         }
         
