@@ -1,7 +1,6 @@
 <html>
     <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
         <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
         <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
@@ -149,11 +148,7 @@
 				<img id="userIcon" src="${profileImageUrl}" />
 				<div id="msgWrapper">
 					<span id="itemFoundMsg">${itemMessage}</span>
-					<span id="timestamp">${timestamp}</span><br>
-					<span>
-						<input type='button' value='Accept' onmouseclick='' /> - 
-						<input type='button' value='Decline' onmouseclick='' />
-					</span>
+					<span id="timestamp">${timestamp}</span><br>					
 				</div>
 			</div>
 			
@@ -175,7 +170,7 @@
                 padding-top:10px;
                 padding-bottom:10px;
             }
-            #items, #sidebar {
+            #items {
 				background:#f1f1f1;
 				color:#1f1f1f;
 				padding:10px;
@@ -185,21 +180,11 @@
 				margin-bottom:0px;
 			}
 			#map-canvas {
-				height:50%;
-			}
-			#sidebar .addborder {
-				border:1px solid #ccc;
-				min-height:50px;
-				background:#bfdaff;
-				overflow:auto;
-				margin-top:5px;
-			}
-			#sidebar div div, #msgWrapper {
+				height:500px;
+			}			
+			#msgWrapper {
 				margin-left:55px;
-			}
-			#sidebar #success {
-				background:#bfffda;
-			}
+			}			
 			#sidebar #error {
 				background:#ffbfda;
 			}
@@ -235,7 +220,7 @@
 						<div class='span2' id='status'>X</div>
 					</div>
 					<center>
-						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:block;'>
+						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
 						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
 					</center>
                 </div>
@@ -250,9 +235,7 @@
 				<a href="#" onclick="dropPin(-34.397, 150.644, 'null')">Add Pin</a><br>
 				
             </div>
-            <div id="sidebar" class="span4">
-				
-			</div>
+            
         </div>
     </body>
 </html>
