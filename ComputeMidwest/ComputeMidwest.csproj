@@ -178,7 +178,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreateHuntController.cs" />
+    <Compile Include="Controllers\FinishedHuntController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JoinHuntController.cs" />
     <Compile Include="Controllers\PusherProvider.cs" />
     <Compile Include="Entities\Facebook\FacebookDetails.cs" />
     <Compile Include="Entities\TwitterDetails.cs" />
@@ -318,6 +320,12 @@
       <Project>{103A2755-6ADC-43DD-8F5B-EB8306465D36}</Project>
       <Name>ComputeMidwest.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\JoinHunt\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\FinishedHunt\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
