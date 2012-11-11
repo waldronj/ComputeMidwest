@@ -143,15 +143,19 @@
 		</script>
 		
 		<script id="pinTemplate" type="text/html">
+			
 			<div id="action" class='addborder'>
 				<img id="userIcon" src="${profileImageUrl}" />
-				<span id="itemFoundMsg">${itemMessage}</span>
-				<span id="timestamp">${timestamp}</span><br>
-				<span>
-					<input type='button' value='Accept' onmouseclick='' /> - 
-					<input type='button' value='Decline' onmouseclick='' />
-				</span>
+				<div id="msgWrapper">
+					<span id="itemFoundMsg">${itemMessage}</span>
+					<span id="timestamp">${timestamp}</span><br>
+					<span>
+						<input type='button' value='Accept' onmouseclick='' /> - 
+						<input type='button' value='Decline' onmouseclick='' />
+					</span>
+				</div>
 			</div>
+			
 		</script>
 		
         <style>
@@ -189,7 +193,7 @@
 				overflow:auto;
 				margin-top:5px;
 			}
-			#sidebar div div {
+			#sidebar div div, #msgWrapper {
 				margin-left:55px;
 			}
 			#sidebar #success {
