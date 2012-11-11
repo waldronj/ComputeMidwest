@@ -25,7 +25,7 @@ namespace ComputeMidwest.Controllers
         [HttpPost]
         public ActionResult Index(string huntName, string description)
         {
-            HuntModel hm = new HuntModel(new EntityModelContainer(), new ComputeMidwest.Model.HuntNotifier()); 
+            HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier()); 
             ComputeMidwest.Models.Communications comm = new Models.Communications();
             comm.PostToTwitter(huntName, Session["access_token"].ToString());
             AccountModel am = new AccountModel(new EntityModelContainer());

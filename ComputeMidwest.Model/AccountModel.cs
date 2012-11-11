@@ -32,7 +32,7 @@ namespace ComputeMidwest.Model
         {
             return
                 (from account in _container.Accounts
-                 where account.AccountToken == accountToken && account.AuthType == authType
+                 where account.AcToken == accountToken && account.AuthType == authType
                  select account).FirstOrDefault();
         }
 
