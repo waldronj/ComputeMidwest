@@ -28,7 +28,12 @@
 				coords = new google.maps.LatLng(lat,lon);
 				var currentMarker = markers.length;
 				markers[currentMarker] = {}
-				var contentString = "This is the popup";
+				var templateOBJ = {};
+				if (!templateOBJ.profileImageUrl)
+					templateOBJ.profileImageUrl = "./img/noprofile.jpg";
+				templateOBJ['itemMessage'] = "sample Message";
+				templateOBJ['timestamp'] = "sample Time";				
+				var contentString = $('#pinTemplate').tmpl().html();
 				markers[currentMarker]['infoWindow'] = new google.maps.InfoWindow({
 					content: contentString
 				});
