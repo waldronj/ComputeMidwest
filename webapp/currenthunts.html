@@ -1,0 +1,148 @@
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+        <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+        <script src="./js/jquery.js"></script>
+        <script src="./js/jquery.tmpl.js"></script>
+		<script src="./js/date.js"></script>
+		
+		<script type='text/javascript'>
+			var objectives = 0;
+			
+			function createRoom() {
+				roomInfo = {}
+				roomInfo['huntName'] = 'Hunt Room #' + objectives;
+				roomInfo['huntProgress'] = ~~(Math.random()*100);
+				roomInfo['huntDiscription'] = 'This is a sample hunt room';
+				$('#newRoom').tmpl(roomInfo).appendTo('#hunts');
+				objectives += 1;
+			}
+			
+			$(document).ready(function() {
+				for (var x=0; x<15; x+=1) {
+					createRoom()
+				}
+			});
+			
+		</script>
+		
+		<script id="newRoom" type="text/html">
+			<tr>
+				<td>${huntName}</td>
+				<td>${huntDiscription}</td>
+				<td><div id='progressContainer'><div id='progressBar' style='width:${huntProgress}%;'>${huntProgress}%</div></div></td>
+				<td><center><input type='button' value='Join ${huntName}'></center></td>
+			</tr>
+		</script>
+		
+        <style>
+			body {
+				background:url(./img/background.jpg) #385b8c;
+				background-repeat:repeat-x;
+				color:#333;
+				margin:0px;
+				padding:0px;
+			}
+            #logo {
+                text-align:center;
+				background:url(./img/texture.jpg);
+				background-repeat:repeat-x;
+				border-bottom:2px solid #000;
+                padding-top:10px;
+                padding-bottom:10px;
+            }
+            #items {
+				background:#f1f1f1;
+				color:#1f1f1f;
+				padding:10px;
+				margin:0px auto;
+			}
+			#header {
+				margin-bottom:0px;
+			}
+			#map-canvas {
+				height:500px;
+			}
+			#sidebar .addborder {
+				border:1px solid #ccc;
+				min-height:50px;
+				background:#bfdaff;
+				overflow:auto;
+				margin-top:5px;
+			}
+			#sidebar div div {
+				margin-left:55px;
+			}
+			#sidebar #success {
+				background:#bfffda;
+			}
+			#sidebar #error {
+				background:#ffbfda;
+			}
+			#userIcon {
+				height:50px;
+				width:50px;
+				position:absolute;
+			}
+			#timestamp {
+				
+			}
+			#map-canvas img {
+				max-width: none;
+			}
+			table thead {
+				background:#333;
+				color:#fff;
+			}
+			#progressContainer {
+				background-color: #1f1f1f;
+				/* (height of inner div) / 2 + padding */
+				border-radius:20px;
+				padding:0px;
+				width:100%;
+				text-align:center;
+			}
+
+			#progressBar {
+				background:#66a7b0;
+				border-radius:20px;
+				color:#fff;
+			}
+			tbody tr {
+				height:38px;
+				
+			}
+			tbody tr:nth-child(even) {
+				background:#ccc;
+			}
+			tbody tr:nth-child(odd) {
+				background:#999;
+			}
+        </style>
+    </head>
+    <body>
+        
+        <div class="row-fluid" id='header'>
+            <div class="span12" id='logo'><img src='./img/hunt.png' /></div>
+        </div>
+        <div class="row-fluid">
+            <div id="items" class="container">
+				<center>Current Hunts</center><br>
+				<table style='width:100%;'>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Progress</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="hunts">
+						
+					</tbody>
+				</table>
+			</div>
+        </div>
+    </body>
+</html>
