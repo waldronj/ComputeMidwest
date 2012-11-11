@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ComputeMidwest.App_Start;
 
 namespace ComputeMidwest
 {
@@ -16,8 +17,10 @@ namespace ComputeMidwest
     {
         protected void Application_Start()
         {
+            AppDomain.CurrentDomain.SetData("SQLServerCompactEditionUnderWebHosting", true);
             AreaRegistration.RegisterAllAreas();
 
+            StructureMapConfig.RegisterStructureMap();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

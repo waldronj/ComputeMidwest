@@ -1,0 +1,271 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 11/11/2012 01:19:59
+-- Generated from EDMX file: C:\Users\tstivers\Documents\Visual Studio 2010\Projects\Hunt\ComputeMidwest.Entity\EntityModel.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [Hunters] DROP CONSTRAINT [FK_HunterAccount];
+GO
+    ALTER TABLE [Objectives] DROP CONSTRAINT [FK_HuntObjective];
+GO
+    ALTER TABLE [FoundObjectives] DROP CONSTRAINT [FK_HunterFoundObjective];
+GO
+    ALTER TABLE [Hunts] DROP CONSTRAINT [FK_HuntAccount];
+GO
+    ALTER TABLE [Hunters] DROP CONSTRAINT [FK_HunterHuntInstance];
+GO
+    ALTER TABLE [HuntInstances] DROP CONSTRAINT [FK_HuntHuntInstance];
+GO
+    ALTER TABLE [FoundObjectives] DROP CONSTRAINT [FK_FoundObjectiveObjective];
+GO
+    ALTER TABLE [HuntInstances] DROP CONSTRAINT [FK_HuntInstanceAccount];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [Hunts];
+GO
+    DROP TABLE [Hunters];
+GO
+    DROP TABLE [Accounts];
+GO
+    DROP TABLE [HuntInstances];
+GO
+    DROP TABLE [Objectives];
+GO
+    DROP TABLE [FoundObjectives];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Hunts'
+CREATE TABLE [Hunts] (
+    [Id] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Description] nvarchar(4000)  NOT NULL,
+    [Creator_Id] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'Hunters'
+CREATE TABLE [Hunters] (
+    [Id] uniqueidentifier  NOT NULL,
+    [Score] smallint  NOT NULL,
+    [Account_Id] uniqueidentifier  NOT NULL,
+    [HuntInstance_Id] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'Accounts'
+CREATE TABLE [Accounts] (
+    [Id] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [AuthType] nvarchar(4000)  NOT NULL,
+    [ProfileImageUrl] nvarchar(4000)  NULL,
+    [AcToken] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'HuntInstances'
+CREATE TABLE [HuntInstances] (
+    [Id] uniqueidentifier  NOT NULL,
+    [HuntId] uniqueidentifier  NOT NULL,
+    [StartTime] datetime  NOT NULL,
+    [EndTime] datetime  NOT NULL,
+    [Admin_Id] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'Objectives'
+CREATE TABLE [Objectives] (
+    [Id] uniqueidentifier  NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [Description] nvarchar(4000)  NOT NULL,
+    [Score] smallint  NOT NULL,
+    [HuntId] uniqueidentifier  NOT NULL
+);
+GO
+
+-- Creating table 'FoundObjectives'
+CREATE TABLE [FoundObjectives] (
+    [Id] uniqueidentifier  NOT NULL,
+    [HunterId] uniqueidentifier  NOT NULL,
+    [TimeFound] datetime  NOT NULL,
+    [Approved] bit  NOT NULL,
+    [ImageUrl] nvarchar(4000)  NOT NULL,
+    [Objective_Id] uniqueidentifier  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [Id] in table 'Hunts'
+ALTER TABLE [Hunts]
+ADD CONSTRAINT [PK_Hunts]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Hunters'
+ALTER TABLE [Hunters]
+ADD CONSTRAINT [PK_Hunters]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Accounts'
+ALTER TABLE [Accounts]
+ADD CONSTRAINT [PK_Accounts]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'HuntInstances'
+ALTER TABLE [HuntInstances]
+ADD CONSTRAINT [PK_HuntInstances]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Objectives'
+ALTER TABLE [Objectives]
+ADD CONSTRAINT [PK_Objectives]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'FoundObjectives'
+ALTER TABLE [FoundObjectives]
+ADD CONSTRAINT [PK_FoundObjectives]
+    PRIMARY KEY ([Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [Account_Id] in table 'Hunters'
+ALTER TABLE [Hunters]
+ADD CONSTRAINT [FK_HunterAccount]
+    FOREIGN KEY ([Account_Id])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HunterAccount'
+CREATE INDEX [IX_FK_HunterAccount]
+ON [Hunters]
+    ([Account_Id]);
+GO
+
+-- Creating foreign key on [HuntId] in table 'Objectives'
+ALTER TABLE [Objectives]
+ADD CONSTRAINT [FK_HuntObjective]
+    FOREIGN KEY ([HuntId])
+    REFERENCES [Hunts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HuntObjective'
+CREATE INDEX [IX_FK_HuntObjective]
+ON [Objectives]
+    ([HuntId]);
+GO
+
+-- Creating foreign key on [HunterId] in table 'FoundObjectives'
+ALTER TABLE [FoundObjectives]
+ADD CONSTRAINT [FK_HunterFoundObjective]
+    FOREIGN KEY ([HunterId])
+    REFERENCES [Hunters]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HunterFoundObjective'
+CREATE INDEX [IX_FK_HunterFoundObjective]
+ON [FoundObjectives]
+    ([HunterId]);
+GO
+
+-- Creating foreign key on [Creator_Id] in table 'Hunts'
+ALTER TABLE [Hunts]
+ADD CONSTRAINT [FK_HuntAccount]
+    FOREIGN KEY ([Creator_Id])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HuntAccount'
+CREATE INDEX [IX_FK_HuntAccount]
+ON [Hunts]
+    ([Creator_Id]);
+GO
+
+-- Creating foreign key on [HuntInstance_Id] in table 'Hunters'
+ALTER TABLE [Hunters]
+ADD CONSTRAINT [FK_HunterHuntInstance]
+    FOREIGN KEY ([HuntInstance_Id])
+    REFERENCES [HuntInstances]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HunterHuntInstance'
+CREATE INDEX [IX_FK_HunterHuntInstance]
+ON [Hunters]
+    ([HuntInstance_Id]);
+GO
+
+-- Creating foreign key on [HuntId] in table 'HuntInstances'
+ALTER TABLE [HuntInstances]
+ADD CONSTRAINT [FK_HuntHuntInstance]
+    FOREIGN KEY ([HuntId])
+    REFERENCES [Hunts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HuntHuntInstance'
+CREATE INDEX [IX_FK_HuntHuntInstance]
+ON [HuntInstances]
+    ([HuntId]);
+GO
+
+-- Creating foreign key on [Objective_Id] in table 'FoundObjectives'
+ALTER TABLE [FoundObjectives]
+ADD CONSTRAINT [FK_FoundObjectiveObjective]
+    FOREIGN KEY ([Objective_Id])
+    REFERENCES [Objectives]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FoundObjectiveObjective'
+CREATE INDEX [IX_FK_FoundObjectiveObjective]
+ON [FoundObjectives]
+    ([Objective_Id]);
+GO
+
+-- Creating foreign key on [Admin_Id] in table 'HuntInstances'
+ALTER TABLE [HuntInstances]
+ADD CONSTRAINT [FK_HuntInstanceAccount]
+    FOREIGN KEY ([Admin_Id])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HuntInstanceAccount'
+CREATE INDEX [IX_FK_HuntInstanceAccount]
+ON [HuntInstances]
+    ([Admin_Id]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

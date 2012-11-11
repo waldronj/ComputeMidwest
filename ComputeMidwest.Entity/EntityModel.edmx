@@ -71,6 +71,7 @@
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="AuthType" Type="nvarchar" Nullable="false" />
     <Property Name="ProfileImageUrl" Type="nvarchar" Nullable="true" />
+    <Property Name="AcToken" Type="nvarchar" Nullable="false" />
   </EntityType>
   <EntityType Name="HuntInstances">
     <Key>
@@ -402,7 +403,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="AuthType" ColumnName="AuthType" />
           <ScalarProperty Name="ProfileImageUrl" ColumnName="ProfileImageUrl" />
-          
+          <ScalarProperty Name="AcToken" ColumnName="AcToken" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
