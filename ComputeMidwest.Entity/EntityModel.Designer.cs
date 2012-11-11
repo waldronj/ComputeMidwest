@@ -248,14 +248,12 @@ namespace ComputeMidwest.Entity
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="authType">Initial value of the AuthType property.</param>
-        /// <param name="acToken">Initial value of the AcToken property.</param>
-        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType, global::System.String acToken)
+        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType)
         {
             Account account = new Account();
             account.Id = id;
             account.Name = name;
             account.AuthType = authType;
-            account.AcToken = acToken;
             return account;
         }
 
@@ -364,26 +362,26 @@ namespace ComputeMidwest.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String AcToken
+        public global::System.String AccountToken
         {
             get
             {
-                return _AcToken;
+                return _AccountToken;
             }
             set
             {
-                OnAcTokenChanging(value);
-                ReportPropertyChanging("AcToken");
-                _AcToken = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("AcToken");
-                OnAcTokenChanged();
+                OnAccountTokenChanging(value);
+                ReportPropertyChanging("AccountToken");
+                _AccountToken = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AccountToken");
+                OnAccountTokenChanged();
             }
         }
-        private global::System.String _AcToken;
-        partial void OnAcTokenChanging(global::System.String value);
-        partial void OnAcTokenChanged();
+        private global::System.String _AccountToken;
+        partial void OnAccountTokenChanging(global::System.String value);
+        partial void OnAccountTokenChanged();
 
         #endregion
     

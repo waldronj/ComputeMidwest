@@ -73,7 +73,7 @@ namespace ComputeMidwest.Controllers
             }
             
             var userExist = _accountModel.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
-            if (userExist != null)
+            if (userExist == null)
             {
                 var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
                 _accountModel.CreateAccount(user.name, Session["account_type"].ToString(), null);

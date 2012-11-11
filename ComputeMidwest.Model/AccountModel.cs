@@ -32,7 +32,7 @@ namespace ComputeMidwest.Model
         {
             return
                 (from account in _container.Accounts
-                 where account.AcToken == accountToken && account.AuthType == authType
+                 where account.AccountToken == accountToken && account.AuthType == authType
                  select account).FirstOrDefault();
         }
 
@@ -40,7 +40,7 @@ namespace ComputeMidwest.Model
         {
             var account = new Account
                 {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Name = username,
                     AuthType = authType,
                     ProfileImageUrl = profileImageUrl

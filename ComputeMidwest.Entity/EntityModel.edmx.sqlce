@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 11/11/2012 02:20:53
+-- Date Created: 11/11/2012 02:29:34
 -- Generated from EDMX file: C:\Users\tstivers\Documents\Visual Studio 2010\Projects\Hunt\ComputeMidwest.Entity\EntityModel.edmx
 -- --------------------------------------------------
 
@@ -75,7 +75,7 @@ CREATE TABLE [Accounts] (
     [Name] nvarchar(4000)  NOT NULL,
     [AuthType] nvarchar(4000)  NOT NULL,
     [ProfileImageUrl] nvarchar(4000)  NULL,
-    [AcToken] nvarchar(4000)  NOT NULL
+    [AccountToken] nvarchar(4000)  NULL
 );
 GO
 
