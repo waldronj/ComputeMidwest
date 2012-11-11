@@ -21,14 +21,8 @@ namespace ComputeMidwest.Controllers
         [HttpPost]
         public ActionResult Index(string huntName)
         {
-            var client = new RestClient(@"https://api.singly.com");
-            RestRequest request = new RestRequest(@"/types/statuses?access_token={token}&to=twitter", Method.POST);
-            request.AddParameter("token", Session["access_token"], ParameterType.UrlSegment);
-            request.AddParameter("status", huntName);
-            
-            IRestResponse response = client.Execute(request);
-
-
+            ComputeMidwest.Models.Communications comm = new Models.Communications();
+            comm.PostToTwitter(huntName, Session["access_token"].ToString());
             return View();
         }
     }
