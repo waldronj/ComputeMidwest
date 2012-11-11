@@ -65,6 +65,7 @@ namespace ComputeMidwest.Controllers
                     var facebookresponse = sa.GetUserFromFacebook(Session["access_token"].ToString());
                     Session["name"] = facebookresponse.name;
                     Session["image"] = facebookresponse.thumbnail_url;
+                    Session["facces"] = facebookresponse.idr.ToString();
                     break;
                 case "Twitter":
                     var response = sa.GetUserFromTwitter(Session["access_token"].ToString());

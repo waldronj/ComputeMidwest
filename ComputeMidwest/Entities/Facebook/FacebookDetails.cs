@@ -165,6 +165,7 @@ namespace ComputeMidwest.Entities.Facebook
     {
         public string name { get; set; }
         public string thumbnail_url { get; set; }
+        public string idr { get; set; }
 
     }
 }

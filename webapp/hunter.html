@@ -10,49 +10,7 @@
 		<script src="./js/date.js"></script>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-		<script>
-			var map;
-			function initialize() {
-				var mapOptions = {
-					zoom: 12,
-					center: new google.maps.LatLng(-34.397, 150.644),
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-			}
-			var markers = [];
-			function dropPin(lat,lon,name,user,zoom) {
-				if (!zoom) {
-					zoom = 12
-				}
-				coords = new google.maps.LatLng(lat,lon);
-				var currentMarker = markers.length;
-				markers[currentMarker] = {}
-				var templateObj = {};
-				if (!templateObj.profileImageUrl)
-					templateObj.profileImageUrl = "./img/noprofile.jpg";
-				templateObj['itemMessage'] = "sample Message";
-				templateObj['timestamp'] = "sample Time";				
-				var contentString = $('#pinTemplate').tmpl(templateObj).html();
-				markers[currentMarker]['infoWindow'] = new google.maps.InfoWindow({
-					content: contentString
-				});
-				markers[currentMarker]['marker'] = new google.maps.Marker({
-					map:map,
-					draggable:false,
-					animation: google.maps.Animation.DROP,
-					position: coords,
-					title: name
-				});
-				
-				google.maps.event.addListener(markers[currentMarker]['marker'], 'click', function() {
-					markers[currentMarker]['infoWindow'].open(map,markers[currentMarker]['marker']);
-				});
-				
-			}
-			google.maps.event.addDomListener(window, 'load', initialize);
-			
-		</script>
+		
 		
         <script type="text/javascript">
 			// Enable pusher logging - don't include this in production
@@ -191,6 +149,35 @@
 			
 		</script>
 		
+		<script type='text/javascript'>
+			var objectives = 0;
+			
+			function listItems() {
+				itemInfo = {}
+				itemInfo['itemName'] = 'Item Name';
+				itemInfo['itemDescription'] = 'Yo there be items, bitch';
+				itemInfo['itemPoints'] = '42';
+				$('#newList').tmpl(itemInfo).appendTo('#itemList');
+				objectives += 1;
+			}
+			
+			$(document).ready(function() {
+				for (var x=0; x<15; x+=1) {
+					listItems()
+				}
+			});
+			
+		</script>
+		
+		<script id="newList" type="text/html">
+			<tr>
+				<td>${itemName}</td>
+				<td>${itemDescription}</td>
+				<td><input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
+					<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' /></td>
+			</tr>
+		</script>
+		
         <style>
 			body {
 				background:url(./img/background.jpg) #385b8c;
@@ -243,23 +230,11 @@
         <div class="row-fluid" id='header'>
             <div class="span12" id='logo'><img src='./img/hunt.png' /></div>
         </div>
-        <div class="row-fluid">
-			<div class='span12' id='map-canvas'></div>
-		</div>
+        
         <div class="row-fluid">
             <div id="items" class="span8">
-                <div id='capture'>
-                    <div class='row'>
-						<div class='span2' id='icon'>No Icon</div>
-						<div class='span8' id='discription'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel lectus quis augue molestie adipiscing nec non augue. Mauris placerat consequat lorem eget dictum. Proin quis tincidunt leo. Etiam convallis iaculis diam a consectetur. Curabitur metus nisl, suscipit a cursus vel, pharetra ac odio. Fusce.
-						</div>
-						<div class='span2' id='status'>X</div>
-					</div>
-					<center>
-						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
-						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
-					</center>
+                <div id='itemList'>
+                    
                 </div>
 				
 				<a href="#" onclick="HunterJoined({'name':'Britt Gresham'})">Join Hunt</a><br>

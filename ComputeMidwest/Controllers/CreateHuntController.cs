@@ -46,18 +46,17 @@ namespace ComputeMidwest.Controllers
             //};
             //hm.CreateHunt(act, hunt);
             ComputeMidwest.Models.Communications comm = new Models.Communications();
-            comm.PostToFacebook(HuntName, Session["access_token"].ToString());
-            
-            //switch (Session["account_type"].ToString())
-            //{
-            //    case "Facebook":
-            //        comm.PostToFacebook(huntName, Session["access_token"].ToString());
-            //        break;
-            //    case "Twitter":
-            //        comm.PostToTwitter(huntName, Session["access_token"].ToString());
-            //        break;
 
-            //}
+            switch (Session["account_type"].ToString())
+            {
+                case "Facebook":
+                    comm.PostToFacebook(HuntName, Session["access_token"].ToString());
+                    break;
+                case "Twitter":
+                    comm.PostToTwitter(HuntName, Session["access_token"].ToString());
+                    break;
+
+            }
             
             
             return View();
