@@ -22,9 +22,9 @@ namespace ComputeMidwest.Model
         {
             if ((from hunt in _container.Hunts where hunt.Name == huntTemplate.Name select hunt).FirstOrDefault() != null)
                 throw new HuntAlreadyExistsException();
-
+            
             huntTemplate.Id = Guid.NewGuid();
-            _container.Hunts.AddObject(huntTemplate);
+            _container.AddToHunts(huntTemplate);
             _container.SaveChanges();
 
             return huntTemplate;

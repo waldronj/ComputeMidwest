@@ -49,7 +49,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="Description" Type="nvarchar" Nullable="false" />
     <Property Name="Creator_Id" Type="uniqueidentifier" Nullable="false" />
@@ -58,7 +58,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Score" Type="smallint" Nullable="false" />
     <Property Name="Account_Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="HuntInstance_Id" Type="uniqueidentifier" Nullable="false" />
@@ -77,7 +77,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="HuntId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="StartTime" Type="datetime" Nullable="false" />
     <Property Name="EndTime" Type="datetime" Nullable="false" />
@@ -87,7 +87,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
     <Property Name="Description" Type="nvarchar" Nullable="false" />
     <Property Name="Score" Type="smallint" Nullable="false" />
@@ -97,7 +97,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="HunterId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TimeFound" Type="datetime" Nullable="false" />
     <Property Name="Approved" Type="bit" Nullable="false" />
@@ -248,7 +248,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
           <NavigationProperty Name="Objectives" Relationship="EntityModel.HuntObjective" FromRole="Hunt" ToRole="Objective" />
@@ -259,7 +259,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Account" Relationship="EntityModel.HunterAccount" FromRole="Hunter" ToRole="Account" />
           <NavigationProperty Name="FoundObjectives" Relationship="EntityModel.HunterFoundObjective" FromRole="Hunter" ToRole="FoundObjective" />
           <NavigationProperty Name="HuntInstance" Relationship="EntityModel.HunterHuntInstance" FromRole="Hunter" ToRole="HuntInstance" />
@@ -290,7 +290,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Hunters" Relationship="EntityModel.HunterHuntInstance" FromRole="HuntInstance" ToRole="Hunter" />
           <NavigationProperty Name="Hunt" Relationship="EntityModel.HuntHuntInstance" FromRole="HuntInstance" ToRole="Hunt" />
           <Property Type="Guid" Name="HuntId" Nullable="false" />
@@ -302,7 +302,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="Description" Nullable="false" />
           <Property Type="Int16" Name="Score" Nullable="false" />
@@ -313,7 +313,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="Hunter" Relationship="EntityModel.HunterFoundObjective" FromRole="FoundObjective" ToRole="Hunter" />
           <Property Type="Guid" Name="HunterId" Nullable="false" />
           <NavigationProperty Name="Objective" Relationship="EntityModel.FoundObjectiveObjective" FromRole="FoundObjective" ToRole="Objective" />

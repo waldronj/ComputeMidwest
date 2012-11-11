@@ -22,7 +22,8 @@ namespace ComputeMidwest.App_Start
                             scanner.WithDefaultConventions();
 
                         });
-                    registry.For<EntityModelContainer>().HttpContextScoped().Use(x => new EntityModelContainer());
+                    registry.SelectConstructor(() => new EntityModelContainer());
+                    registry.For<EntityModelContainer>().HttpContextScoped();
                     registry.For<IPusherProvider>().Use(x => new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d"));
                 }
             );

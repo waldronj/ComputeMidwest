@@ -35,18 +35,17 @@ namespace ComputeMidwest.Controllers
         [HttpPost]
         public ActionResult Index(string huntName, string description)
         {
-            HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier(new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d")));
-
-            AccountModel am = new AccountModel(new EntityModelContainer());
-            Account act = am.GetAccountByAccountToken(Session["account"].ToString(), Session["account_type"].ToString());
-            Hunt hunt = new Hunt()
+                        
+            Account act = _accountModel.GetAccountByAccountToken(Session["account"].ToString(), Session["account_type"].ToString());
+            var hunt = new Hunt()
             {
                 Creator = act,
                 Name = huntName,
                 Description = description
             };
-            hm.CreateHunt(act, hunt);
-            ComputeMidwest.Models.Communications comm = new Models.Communications();
+            _huntModel.CreateHunt(act, hunt);
+
+            var comm = new Models.Communications();
 
             switch (Session["account_type"].ToString())
             {
