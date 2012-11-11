@@ -24,19 +24,31 @@ namespace ComputeMidwest.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string huntName, string description)
+        public ActionResult Index(string HuntName)
         {
-            HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier(new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d"))); 
+            //HuntModel hm = new HuntModel(new EntityModelContainer(), new HuntNotifier(new PusherProvider("31452", "04af48f0bd881f9f9737", "0bbb6f45596775fa5d2d"))); 
+            
+            //AccountModel am = new AccountModel(new EntityModelContainer());
+            //Account act = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            //Hunt hunt = new Hunt()
+            //{
+            //    Name = huntName,
+            //    Description = description
+            //};
+            //hm.CreateHunt(act, hunt);
             ComputeMidwest.Models.Communications comm = new Models.Communications();
-            comm.PostToTwitter(huntName, Session["access_token"].ToString());
-            AccountModel am = new AccountModel(new EntityModelContainer());
-            Account act = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
-            Hunt hunt = new Hunt()
-            {
-                Name = huntName,
-                Description = description
-            };
-            hm.CreateHunt(act, hunt);
+            comm.PostToFacebook(HuntName, Session["access_token"].ToString());
+            
+            //switch (Session["account_type"].ToString())
+            //{
+            //    case "Facebook":
+            //        comm.PostToFacebook(huntName, Session["access_token"].ToString());
+            //        break;
+            //    case "Twitter":
+            //        comm.PostToTwitter(huntName, Session["access_token"].ToString());
+            //        break;
+
+            //}
             
             
             return View();
