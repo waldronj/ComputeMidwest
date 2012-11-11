@@ -8,15 +8,24 @@ using ComputeMidwest;
 using ComputeMidwest.Model;
 using ComputeMidwest.Entity;
 using PusherRESTDotNet;
+using StructureMap;
 
 
 namespace ComputeMidwest.Controllers
 {
     public class CreateHuntController : Controller
     {
+        private readonly AccountModel _accountModel;
+        private readonly HuntModel _huntModel;
+
+        public CreateHuntController()
+        {
+            _accountModel = ObjectFactory.GetInstance<AccountModel>();
+            _huntModel = ObjectFactory.GetInstance<HuntModel>();
+        }
+
         //
         // GET: /CreateHunt/
-
         public ActionResult Index()
         {
             

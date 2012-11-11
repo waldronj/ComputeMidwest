@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using StructureMap;
 using WebMatrix.WebData;
 
 using ComputeMidwest.Models;
@@ -20,13 +21,17 @@ namespace ComputeMidwest.Controllers
        
     public class AccountController : Controller
     {
+        private readonly AccountModel _accountModel;
+
+        public AccountController()
+        {
+            _accountModel = ObjectFactory.GetInstance<AccountModel>();
+        }
+
         //
         // GET: /Account/Login
-
-        [AllowAnonymous]
         public ActionResult Login()
-        {
-            
+        {            
             return View();
         }
 
@@ -35,30 +40,24 @@ namespace ComputeMidwest.Controllers
         {
             if (Facebook != null )
             {
-                ViewBag.Message = "Facebook";
-                Response.Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&scope=manage_pages&redirect_uri=http://thehuntsomething.com:9999/account/authenticated&service=facebook");
-                Session["account_type"] = "Facebook";
+                Session["account_type"] = "Facebook";                
+                return Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&scope=manage_pages&redirect_uri=http://hunt.nicfog.com:9999/account/authenticated&service=facebook");
             }
             else
             {
-                ViewBag.Message = "Twitter";
-                Response.Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&redirect_uri=http://thehuntsomething.com:9999/account/authenticated&service=twitter");
                 Session["account_type"] = "Twitter";
+                return Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&redirect_uri=http://hunt.nicfog.com:9999/account/authenticated&service=twitter");             
             }
-            
-            return View("LoginTest");
         }
-        
+                
         public ActionResult Authenticated(string code)
         {
+            
             Session["code"] = code;
-            ComputeMidwest.Models.SinglyAuthenticator sa = new SinglyAuthenticator();
+            var sa = new SinglyAuthenticator();
             var authToken = sa.GetAuthenticated(code);
             Session["access_token"] = authToken.access_token;
             Session["account"] = authToken.account;
-            
-           // AccountModel am = new AccountModel(new EntityModelContainer());            
-            
             
             switch (Session["account_type"].ToString())
             {
@@ -73,16 +72,16 @@ namespace ComputeMidwest.Controllers
                     break;
             }
             
-            //var userExist = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
-            //if (userExist != null)
-            //{
-            //    var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
-            //    am.CreateAccount(user.name, Session["account_type"].ToString(), null);
-            //}
-            //else
-            //{
-            //    return View("Index", "Home");
-            //}
+            var userExist = _accountModel.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            if (userExist != null)
+            {
+                var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
+                _accountModel.CreateAccount(user.name, Session["account_type"].ToString(), null);
+            }
+            else
+            {
+                return View("Index", "Home");
+            }
 
             ViewBag.UserName = Session["name"].ToString();
             ViewBag.Image = Session["image"].ToString();
