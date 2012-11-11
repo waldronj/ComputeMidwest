@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Creating a new Hunt</h2>
+
+@using(Html.BeginForm()){
+    <p>Name of the Hunt:</p>
+    <input type="text" name="HuntName" />
+    <input type="submit" name="Create Hunt" />
+}
