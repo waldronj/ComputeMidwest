@@ -20,6 +20,12 @@ namespace ComputeMidwest.Model
 
         public Hunt CreateHunt(Account user, Hunt huntTemplate)
         {
+            if ((from hunt in _container.Hunts where hunt.Name == huntTemplate.Name select hunt).FirstOrDefault() != null)
+                throw new HuntAlreadyExistsException();
+
+            _container.Hunts.AddObject(huntTemplate);
+            _container.SaveChanges();
+
             return huntTemplate;
         }
 
@@ -107,6 +113,10 @@ namespace ComputeMidwest.Model
             
         }        
 
+    }
+
+    internal class HuntAlreadyExistsException : Exception
+    {
     }
 
     internal class HuntEndedException : Exception

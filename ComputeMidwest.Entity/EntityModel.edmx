@@ -4,11 +4,200 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="EntityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="EntityModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="EntityModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="EntityModelStoreContainer">
+    <EntitySet Name="Hunts" EntityType="EntityModel.Store.Hunts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Hunters" EntityType="EntityModel.Store.Hunters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts" EntityType="EntityModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HuntInstances" EntityType="EntityModel.Store.HuntInstances" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Objectives" EntityType="EntityModel.Store.Objectives" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FoundObjectives" EntityType="EntityModel.Store.FoundObjectives" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="HunterAccount" Association="EntityModel.Store.HunterAccount">
+      <End Role="Hunter" EntitySet="Hunters" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="HuntObjective" Association="EntityModel.Store.HuntObjective">
+      <End Role="Hunt" EntitySet="Hunts" />
+      <End Role="Objective" EntitySet="Objectives" />
+    </AssociationSet>
+    <AssociationSet Name="HunterFoundObjective" Association="EntityModel.Store.HunterFoundObjective">
+      <End Role="Hunter" EntitySet="Hunters" />
+      <End Role="FoundObjective" EntitySet="FoundObjectives" />
+    </AssociationSet>
+    <AssociationSet Name="HuntAccount" Association="EntityModel.Store.HuntAccount">
+      <End Role="Hunt" EntitySet="Hunts" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="HunterHuntInstance" Association="EntityModel.Store.HunterHuntInstance">
+      <End Role="Hunter" EntitySet="Hunters" />
+      <End Role="HuntInstance" EntitySet="HuntInstances" />
+    </AssociationSet>
+    <AssociationSet Name="HuntHuntInstance" Association="EntityModel.Store.HuntHuntInstance">
+      <End Role="Hunt" EntitySet="Hunts" />
+      <End Role="HuntInstance" EntitySet="HuntInstances" />
+    </AssociationSet>
+    <AssociationSet Name="FoundObjectiveObjective" Association="EntityModel.Store.FoundObjectiveObjective">
+      <End Role="FoundObjective" EntitySet="FoundObjectives" />
+      <End Role="Objective" EntitySet="Objectives" />
+    </AssociationSet>
+    <AssociationSet Name="HuntInstanceAccount" Association="EntityModel.Store.HuntInstanceAccount">
+      <End Role="HuntInstance" EntitySet="HuntInstances" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Hunts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="Creator_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hunters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Score" Type="smallint" Nullable="false" />
+    <Property Name="Account_Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="HuntInstance_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="AuthType" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HuntInstances">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HuntId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Admin_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Objectives">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" />
+    <Property Name="Score" Type="nvarchar" Nullable="false" />
+    <Property Name="HuntId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoundObjectives">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HunterId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TimeFound" Type="datetime" Nullable="false" />
+    <Property Name="Approved" Type="bit" Nullable="false" />
+    <Property Name="Objective_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="HunterAccount">
+    <End Role="Hunter" Type="EntityModel.Store.Hunters" Multiplicity="*" />
+    <End Role="Account" Type="EntityModel.Store.Accounts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Hunter">
+        <PropertyRef Name="Account_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HuntObjective">
+    <End Role="Hunt" Type="EntityModel.Store.Hunts" Multiplicity="1" />
+    <End Role="Objective" Type="EntityModel.Store.Objectives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hunt">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Objective">
+        <PropertyRef Name="HuntId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HunterFoundObjective">
+    <End Role="Hunter" Type="EntityModel.Store.Hunters" Multiplicity="1" />
+    <End Role="FoundObjective" Type="EntityModel.Store.FoundObjectives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hunter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoundObjective">
+        <PropertyRef Name="HunterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HuntAccount">
+    <End Role="Hunt" Type="EntityModel.Store.Hunts" Multiplicity="*" />
+    <End Role="Account" Type="EntityModel.Store.Accounts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Hunt">
+        <PropertyRef Name="Creator_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HunterHuntInstance">
+    <End Role="Hunter" Type="EntityModel.Store.Hunters" Multiplicity="*" />
+    <End Role="HuntInstance" Type="EntityModel.Store.HuntInstances" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="HuntInstance">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Hunter">
+        <PropertyRef Name="HuntInstance_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HuntHuntInstance">
+    <End Role="Hunt" Type="EntityModel.Store.Hunts" Multiplicity="1" />
+    <End Role="HuntInstance" Type="EntityModel.Store.HuntInstances" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hunt">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HuntInstance">
+        <PropertyRef Name="HuntId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FoundObjectiveObjective">
+    <End Role="FoundObjective" Type="EntityModel.Store.FoundObjectives" Multiplicity="*" />
+    <End Role="Objective" Type="EntityModel.Store.Objectives" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Objective">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FoundObjective">
+        <PropertyRef Name="Objective_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HuntInstanceAccount">
+    <End Role="HuntInstance" Type="EntityModel.Store.HuntInstances" Multiplicity="*" />
+    <End Role="Account" Type="EntityModel.Store.Accounts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HuntInstance">
+        <PropertyRef Name="Admin_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EntityModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
@@ -178,13 +367,107 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="EntityModel" />
-        <Alias Key="Target" Value="EntityModel.Store" />
-        <EntityContainerMapping CdmEntityContainer="EntityModelContainer" StorageEntityContainer="EntityModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="EntityModelContainer">
+    <EntitySetMapping Name="Hunts">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.Hunt)">
+        <MappingFragment StoreEntitySet="Hunts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hunters">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.Hunter)">
+        <MappingFragment StoreEntitySet="Hunters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.Account)">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AuthType" ColumnName="AuthType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HuntInstances">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.HuntInstance)">
+        <MappingFragment StoreEntitySet="HuntInstances">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Objectives">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.Objective)">
+        <MappingFragment StoreEntitySet="Objectives">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoundObjectives">
+      <EntityTypeMapping TypeName="IsTypeOf(EntityModel.FoundObjective)">
+        <MappingFragment StoreEntitySet="FoundObjectives">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HunterId" ColumnName="HunterId" />
+          <ScalarProperty Name="TimeFound" ColumnName="TimeFound" />
+          <ScalarProperty Name="Approved" ColumnName="Approved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="HunterAccount" TypeName="EntityModel.HunterAccount" StoreEntitySet="Hunters">
+      <EndProperty Name="Account">
+        <ScalarProperty Name="Id" ColumnName="Account_Id" />
+      </EndProperty>
+      <EndProperty Name="Hunter">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HuntAccount" TypeName="EntityModel.HuntAccount" StoreEntitySet="Hunts">
+      <EndProperty Name="Account">
+        <ScalarProperty Name="Id" ColumnName="Creator_Id" />
+      </EndProperty>
+      <EndProperty Name="Hunt">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HunterHuntInstance" TypeName="EntityModel.HunterHuntInstance" StoreEntitySet="Hunters">
+      <EndProperty Name="HuntInstance">
+        <ScalarProperty Name="Id" ColumnName="HuntInstance_Id" />
+      </EndProperty>
+      <EndProperty Name="Hunter">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FoundObjectiveObjective" TypeName="EntityModel.FoundObjectiveObjective" StoreEntitySet="FoundObjectives">
+      <EndProperty Name="Objective">
+        <ScalarProperty Name="Id" ColumnName="Objective_Id" />
+      </EndProperty>
+      <EndProperty Name="FoundObjective">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HuntInstanceAccount" TypeName="EntityModel.HuntInstanceAccount" StoreEntitySet="HuntInstances">
+      <EndProperty Name="Account">
+        <ScalarProperty Name="Id" ColumnName="Admin_Id" />
+      </EndProperty>
+      <EndProperty Name="HuntInstance">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
