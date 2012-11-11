@@ -14,7 +14,7 @@
 				roomInfo = {}
 				roomInfo['huntName'] = 'Hunt Room #' + objectives;
 				roomInfo['huntProgress'] = ~~(Math.random()*100);
-				roomInfo['huntDiscription'] = 'This is a sample hunt room';
+				roomInfo['huntDescription'] = 'This is a sample hunt room';
 				$('#newRoom').tmpl(roomInfo).appendTo('#hunts');
 				objectives += 1;
 			}
@@ -30,7 +30,7 @@
 		<script id="newRoom" type="text/html">
 			<tr>
 				<td>${huntName}</td>
-				<td>${huntDiscription}</td>
+				<td>${huntDescription}</td>
 				<td><div id='progressContainer'><div id='progressBar' style='width:${huntProgress}%;'>${huntProgress}%</div></div></td>
 				<td><center><input type='button' value='Join ${huntName}'></center></td>
 			</tr>
@@ -118,6 +118,12 @@
 			}
 			tbody tr:nth-child(odd) {
 				background:#999;
+			}
+			.container {
+				background:#f1f1f1;
+				-moz-box-shadow:0px 0px 30px #000000;
+				-webkit-box-shadow:0px 0px 30px #000000;
+				box-shadow:0px 0px 30px #000000;
 			}
         </style>
     </head>
