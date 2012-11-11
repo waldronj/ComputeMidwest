@@ -175,7 +175,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Communications.cs" />
     <Compile Include="Models\SinglyAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,15 +274,7 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -306,6 +297,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\CreateHunt\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ComputeMidwest.Entity\ComputeMidwest.Entity.csproj">
+      <Project>{2BDC34A1-25EB-450D-9D4B-7D100E2933D6}</Project>
+      <Name>ComputeMidwest.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ComputeMidwest.Model\ComputeMidwest.Model.csproj">
+      <Project>{103A2755-6ADC-43DD-8F5B-EB8306465D36}</Project>
+      <Name>ComputeMidwest.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

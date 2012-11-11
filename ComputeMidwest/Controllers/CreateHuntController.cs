@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using RestSharp;
 using ComputeMidwest;
+using ComputeMidwest.Model;
+using ComputeMidwest.Entity;
 
 
 namespace ComputeMidwest.Controllers
@@ -21,10 +23,19 @@ namespace ComputeMidwest.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string huntName)
+        public ActionResult Index(string huntName, string description)
         {
+            HuntModel hm = new HuntModel(new EntityModelContainer(), new ComputeMidwest.Model.HuntNotifier()); 
             ComputeMidwest.Models.Communications comm = new Models.Communications();
             comm.PostToTwitter(huntName, Session["access_token"].ToString());
+            AccountModel am = new AccountModel(new EntityModelContainer());
+            Account act = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            Hunt hunt = new Hunt()
+            {
+                Name = huntName,
+                Description = description
+            };
+            hm.CreateHunt(act, hunt);
             
             
             return View();

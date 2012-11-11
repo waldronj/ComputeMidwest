@@ -4,7 +4,7 @@ using ComputeMidwest.Entity;
 
 namespace ComputeMidwest.Model
 {
-    internal class AccountModel
+    public class AccountModel
     {
         private readonly EntityModelContainer _container;
 
@@ -24,6 +24,14 @@ namespace ComputeMidwest.Model
             return
                 (from account in _container.Accounts
                  where account.Name == username && account.AuthType == authType
+                 select account).FirstOrDefault();
+        }
+
+        public Account GetAccountByAccountToken(string accountToken, string authType)
+        {
+            return
+                (from account in _container.Accounts
+                 where account.AccountToken == accountToken && account.AuthType == authType
                  select account).FirstOrDefault();
         }
 
