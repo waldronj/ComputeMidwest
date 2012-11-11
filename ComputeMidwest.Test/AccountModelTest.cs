@@ -21,7 +21,7 @@ namespace ComputeMidwest.Test
         [Test]
         public void TestCreateAccount()
         {
-            var account = _model.CreateAccount("Tom", "Twitter", "http://goatse.cx");
+            var account = _model.CreateAccount("bleh", "Tom", "Twitter", "http://goatse.cx");
         }
     }
 }

@@ -36,14 +36,15 @@ namespace ComputeMidwest.Model
                  select account).FirstOrDefault();
         }
 
-        public Account CreateAccount(string username, string authType, string profileImageUrl)
+        public Account CreateAccount(string accountToken, string username, string authType, string profileImageUrl)
         {
             var account = new Account
                 {
                     Id = Guid.NewGuid(),
                     Name = username,
                     AuthType = authType,
-                    ProfileImageUrl = profileImageUrl
+                    ProfileImageUrl = profileImageUrl,
+                    AccountToken = accountToken
                 };
 
             _container.Accounts.AddObject(account);

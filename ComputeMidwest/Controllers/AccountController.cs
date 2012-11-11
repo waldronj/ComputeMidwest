@@ -73,11 +73,11 @@ namespace ComputeMidwest.Controllers
                     break;
             }
             
-            var userExist = _accountModel.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            var userExist = _accountModel.GetAccountByAccountToken(authToken.account, Session["account_type"].ToString());
             if (userExist == null)
             {
                 var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
-                _accountModel.CreateAccount(user.name, Session["account_type"].ToString(), null);
+                _accountModel.CreateAccount(authToken.account, user.name, Session["account_type"].ToString(), null);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace ComputeMidwest.Controllers
             }
 
             ViewBag.UserName = Session["name"].ToString();
-            ViewBag.Image = Session["image"].ToString();
+            ViewBag.Image = Session["image"] != null ? Session["image"].ToString() : String.Empty;
             ViewBag.Code = code;
             ViewBag.Response = authToken.account;
 
