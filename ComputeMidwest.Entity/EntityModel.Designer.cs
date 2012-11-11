@@ -250,14 +250,14 @@ namespace ComputeMidwest.Entity
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="authType">Initial value of the AuthType property.</param>
-        /// <param name="accountToken">Initial value of the AccountToken property.</param>
-        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType, global::System.String accountToken)
+        /// <param name="acToken">Initial value of the AcToken property.</param>
+        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType, global::System.String acToken)
         {
             Account account = new Account();
             account.Id = id;
             account.Name = name;
             account.AuthType = authType;
-            account.AccountToken = accountToken;
+            account.AcToken = acToken;
             return account;
         }
 
@@ -343,7 +343,6 @@ namespace ComputeMidwest.Entity
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-<<<<<<< HEAD
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String ProfileImageUrl
@@ -364,28 +363,30 @@ namespace ComputeMidwest.Entity
         private global::System.String _ProfileImageUrl;
         partial void OnProfileImageUrlChanging(global::System.String value);
         partial void OnProfileImageUrlChanged();
-=======
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String AccountToken
+        public global::System.String AcToken
         {
             get
             {
-                return _AccountToken;
+                return _AcToken;
             }
             set
             {
-                OnAccountTokenChanging(value);
-                ReportPropertyChanging("AccountToken");
-                _AccountToken = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("AccountToken");
-                OnAccountTokenChanged();
+                OnAcTokenChanging(value);
+                ReportPropertyChanging("AcToken");
+                _AcToken = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("AcToken");
+                OnAcTokenChanged();
             }
         }
-        private global::System.String _AccountToken;
-        partial void OnAccountTokenChanging(global::System.String value);
-        partial void OnAccountTokenChanged();
->>>>>>> 34b54be36a8ffff2bd6b34239a61025bcbfe9112
+        private global::System.String _AcToken;
+        partial void OnAcTokenChanging(global::System.String value);
+        partial void OnAcTokenChanged();
 
         #endregion
 

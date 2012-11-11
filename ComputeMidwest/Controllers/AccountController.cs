@@ -8,10 +8,12 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using ComputeMidwest.Filters;
+
 using ComputeMidwest.Models;
 using RestSharp;
 using Newtonsoft.Json;
+using ComputeMidwest.Model;
+using ComputeMidwest.Entity;
 
 namespace ComputeMidwest.Controllers
 {
@@ -35,11 +37,13 @@ namespace ComputeMidwest.Controllers
             {
                 ViewBag.Message = "Facebook";
                 Response.Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&redirect_uri=http://localhost:9999/account/authenticated&service=facebook");
+                Session["account_type"] = "Facebook";
             }
             else
             {
                 ViewBag.Message = "Twitter";
                 Response.Redirect("https://api.singly.com/oauth/authenticate?client_id=1126787a8dfc27ada2cebc9deedd520e&redirect_uri=http://localhost:9999/account/authenticated&service=twitter");
+                Session["account_type"] = "Twitter";
             }
             
             return View("LoginTest");
@@ -53,11 +57,24 @@ namespace ComputeMidwest.Controllers
             Session["access_token"] = authToken.access_token;
             Session["account"] = authToken.account;
             
-            var response = sa.GetUser(Session["access_token"].ToString());
-            ViewBag.UserName = response.name;
-            ViewBag.Image = response.profile_image_url_https;
-            ViewBag.Code = code;
-            ViewBag.Response = authToken.account;
+            AccountModel am = new AccountModel(new EntityModelContainer());            
+            var response = sa.GetUserFromTwitter(Session["access_token"].ToString());
+            Session["name"] = response.name;
+            var userExist = am.GetAccountByAccountToken(Session["access_token"].ToString(), Session["account_type"].ToString());
+            if (userExist != null)
+            {
+                var user = sa.GetUserFromTwitter(Session["access_token"].ToString());
+                am.CreateAccount(user.name, Session["account_type"].ToString());
+            }
+            else
+            {
+                return View("Index", "Home");
+            }
+            
+            //ViewBag.UserName = response.name;
+            //ViewBag.Image = response.profile_image_url_https;
+            //ViewBag.Code = code;
+            //ViewBag.Response = authToken.account;
 
             return View();
         }

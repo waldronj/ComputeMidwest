@@ -5,6 +5,8 @@ using System.Web;
 using RestSharp;
 using Newtonsoft.Json;
 using ComputeMidwest.Entities;
+using ComputeMidwest.Entity;
+using ComputeMidwest.Model;
 
 namespace ComputeMidwest.Models
 {
@@ -27,7 +29,7 @@ namespace ComputeMidwest.Models
             
         }
 
-        public ComputeMidwest.Entities.Data GetUser(string accessToken)
+        public ComputeMidwest.Entities.Data GetUserFromTwitter(string accessToken)
         {
             //https://api.singly.com/profiles/twitter?access_token=my_token
             var client = new RestClient("https://api.singly.com");

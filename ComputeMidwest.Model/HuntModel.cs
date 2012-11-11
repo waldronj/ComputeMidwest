@@ -7,7 +7,7 @@ using ComputeMidwest.Entity;
 
 namespace ComputeMidwest.Model
 {
-    class HuntModel
+    public class HuntModel
     {
         private readonly EntityModelContainer _container;
         private readonly HuntNotifier _notifier;

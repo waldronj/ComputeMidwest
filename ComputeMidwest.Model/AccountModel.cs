@@ -27,6 +27,15 @@ namespace ComputeMidwest.Model
                  select account).FirstOrDefault();
         }
 
+
+        public Account GetAccountByAccountToken(string accountToken, string authType)
+        {
+            return
+                (from account in _container.Accounts
+                 where account.AcToken == accountToken && account.AuthType == authType
+                 select account).FirstOrDefault();
+        }
+
         public Account CreateAccount(string username, string authType, string profileImageUrl)
         {
             var account = new Account
