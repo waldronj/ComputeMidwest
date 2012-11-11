@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -174,6 +175,7 @@ namespace ComputeMidwest.Entity
         private ObjectSet<FoundObjective> _FoundObjectives;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -225,11 +227,11 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -248,16 +250,19 @@ namespace ComputeMidwest.Entity
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="authType">Initial value of the AuthType property.</param>
-        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType)
+        /// <param name="accountToken">Initial value of the AccountToken property.</param>
+        public static Account CreateAccount(global::System.Guid id, global::System.String name, global::System.String authType, global::System.String accountToken)
         {
             Account account = new Account();
             account.Id = id;
             account.Name = name;
             account.AuthType = authType;
+            account.AccountToken = accountToken;
             return account;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -334,8 +339,33 @@ namespace ComputeMidwest.Entity
         private global::System.String _AuthType;
         partial void OnAuthTypeChanging(global::System.String value);
         partial void OnAuthTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AccountToken
+        {
+            get
+            {
+                return _AccountToken;
+            }
+            set
+            {
+                OnAccountTokenChanging(value);
+                ReportPropertyChanging("AccountToken");
+                _AccountToken = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("AccountToken");
+                OnAccountTokenChanged();
+            }
+        }
+        private global::System.String _AccountToken;
+        partial void OnAccountTokenChanging(global::System.String value);
+        partial void OnAccountTokenChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -406,6 +436,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -436,6 +467,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -538,6 +570,7 @@ namespace ComputeMidwest.Entity
         partial void OnApprovedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -618,6 +651,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -646,6 +680,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -724,6 +759,7 @@ namespace ComputeMidwest.Entity
         partial void OnDescriptionChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -810,6 +846,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -836,6 +873,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -890,6 +928,7 @@ namespace ComputeMidwest.Entity
         partial void OnScoreChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -992,6 +1031,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1022,6 +1062,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1124,6 +1165,7 @@ namespace ComputeMidwest.Entity
         partial void OnEndTimeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1226,6 +1268,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1258,6 +1301,7 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1384,6 +1428,7 @@ namespace ComputeMidwest.Entity
         partial void OnHuntIdChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1426,8 +1471,10 @@ namespace ComputeMidwest.Entity
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }

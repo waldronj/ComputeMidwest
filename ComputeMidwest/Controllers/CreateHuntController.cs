@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RestSharp;
+using ComputeMidwest;
+
 
 namespace ComputeMidwest.Controllers
 {
@@ -23,6 +25,8 @@ namespace ComputeMidwest.Controllers
         {
             ComputeMidwest.Models.Communications comm = new Models.Communications();
             comm.PostToTwitter(huntName, Session["access_token"].ToString());
+            
+            
             return View();
         }
     }

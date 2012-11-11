@@ -272,6 +272,7 @@
           <NavigationProperty Name="HuntInstances" Relationship="EntityModel.HuntInstanceAccount" FromRole="Account" ToRole="HuntInstance" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="String" Name="AuthType" Nullable="false" />
+          <Property Type="String" Name="AccountToken" Nullable="false" MaxLength="Max" />
         </EntityType>
         <Association Name="HunterAccount">
           <End Type="EntityModel.Hunter" Role="Hunter" Multiplicity="*" />
@@ -487,10 +488,10 @@
       <Diagram Name="EntityModel" >
         <EntityTypeShape EntityType="EntityModel.Hunt" Width="1.5" PointX="0.75" PointY="1.25" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="EntityModel.Hunter" Width="1.5" PointX="0.75" PointY="4.375" Height="1.9802864583333317" />
-        <EntityTypeShape EntityType="EntityModel.Account" Width="1.5" PointX="3" PointY="4.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="EntityModel.Account" Width="1.5" PointX="3" PointY="4.25" Height="2.3648893229166665" />
         <AssociationConnector Association="EntityModel.HunterAccount">
-          <ConnectorPoint PointX="2.25" PointY="5.3651432291666659" />
-          <ConnectorPoint PointX="3" PointY="5.3651432291666659" />
+          <ConnectorPoint PointX="2.25" PointY="5.6283030364583322" />
+          <ConnectorPoint PointX="3" PointY="5.6283030364583322" />
         </AssociationConnector>
         <EntityTypeShape EntityType="EntityModel.HuntInstance" Width="1.5" PointX="3" PointY="1.125" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="EntityModel.Objective" Width="1.5" PointX="5.25" PointY="10.25" Height="2.1725878906249996" />
@@ -511,8 +512,8 @@
         <AssociationConnector Association="EntityModel.HuntAccount">
           <ConnectorPoint PointX="2.2257692307692305" PointY="3.4225878906249996" />
           <ConnectorPoint PointX="2.625" PointY="3.8218186598557691" />
-          <ConnectorPoint PointX="2.625" PointY="4.7763196145833327" />
-          <ConnectorPoint PointX="3" PointY="4.7763196145833327" />
+          <ConnectorPoint PointX="2.625" PointY="4.9078995182291649" />
+          <ConnectorPoint PointX="3" PointY="4.9078995182291649" />
         </AssociationConnector>
         <AssociationConnector Association="EntityModel.HunterHuntInstance">
           <ConnectorPoint PointX="2.25" PointY="4.4373066923076925" />

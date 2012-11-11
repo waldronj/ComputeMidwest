@@ -170,6 +170,7 @@
     <Compile Include="Controllers\CreateHuntController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entities\AccessToken.cs" />
+    <Compile Include="Entities\TwitterDetails.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

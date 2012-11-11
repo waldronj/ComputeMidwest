@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessToken.cs" />
     <Compile Include="EntityModel.Designer.cs">
       <DependentUpon>EntityModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
