@@ -1,6 +1,7 @@
 <html>
     <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 		
         <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
         <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
@@ -180,7 +181,7 @@
 				margin-bottom:0px;
 			}
 			#map-canvas {
-				height:500px;
+				height:50%;
 			}
 			#sidebar .addborder {
 				border:1px solid #ccc;
@@ -230,7 +231,7 @@
 						<div class='span2' id='status'>X</div>
 					</div>
 					<center>
-						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:none;'>
+						<input type="file" id="uploadPicture" accept="image/*" capture="camera" style='display:block;'>
 						<input type='button' onclick="$('#uploadPicture').click()" value='I Found It' />
 					</center>
                 </div>
